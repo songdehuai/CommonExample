@@ -6,11 +6,7 @@ package com.songdehuai.commonlib.task
 interface TaskCallback {
 
     interface CommonCallback {
-
-        fun background()
-
-        fun finish()
-
+        fun success(str: String)
     }
 
 }

@@ -3,8 +3,6 @@ package com.songdehuai.commonexample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.songdehuai.commonlib.task.TaskCallback
-import com.songdehuai.commonlib.task.TaskExecutor
-import com.songdehuai.commonlib.task.imp.TaskExecutorImp
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,17 +15,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
         test_btn.setOnClickListener {
-            var task: TaskExecutor
-            task = TaskExecutorImp()
-            task.start(object : TaskCallback.CommonCallback {
-                override fun background() {
-
-                }
-
-                override fun finish(str: String) {
+            C.test(object : TaskCallback.CommonCallback {
+                override fun success(str: String) {
                     log(str)
                 }
-
             })
         }
     }

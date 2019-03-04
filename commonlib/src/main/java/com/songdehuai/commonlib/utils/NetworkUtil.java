@@ -1,4 +1,4 @@
-package com.songdehuai.commonexample;
+package com.songdehuai.commonlib.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -28,7 +28,7 @@ public class NetworkUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "{ \"success\": false,\n   \"errorMsg\": \"后台服务器开小差了!\",\n     \"result\":{}}";
+        return "-998";
     }
 
     /*
@@ -51,7 +51,7 @@ public class NetworkUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "{ \"success\": false,\n   \"errorMsg\": \"后台服务器开小差了!\",\n     \"result\":{}}";
+        return "-998";
     }
 
     private static String getParams(HashMap<String, String> paramsMap) {
