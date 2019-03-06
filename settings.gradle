@@ -1,1 +1,1 @@
-include ':app','CommonLib'
+include ':app', 'CommonLib', ':xutils'

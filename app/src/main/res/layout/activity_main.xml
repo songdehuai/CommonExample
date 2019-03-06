@@ -18,7 +18,7 @@
         android:id="@+id/status_tn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="状态" />
+        android:text="清除" />
 
     <EditText
         android:id="@+id/log_et"

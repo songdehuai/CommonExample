@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/CommonExample.iml" filepath="$PROJECT_DIR$/CommonExample.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonlib/CommonLib.iml" filepath="$PROJECT_DIR$/commonlib/CommonLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xutils/xutils.iml" filepath="$PROJECT_DIR$/xutils/xutils.iml" />
     </modules>
   </component>
 </project>
