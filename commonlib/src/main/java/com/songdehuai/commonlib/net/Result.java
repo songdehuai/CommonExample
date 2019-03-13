@@ -1,7 +1,7 @@
 package com.songdehuai.commonlib.net;
 
 /**
- * 数据泛性
+ * 数据泛型
  *
  * @param <T>
  */
