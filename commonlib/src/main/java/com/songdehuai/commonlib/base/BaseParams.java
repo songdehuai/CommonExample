@@ -3,12 +3,7 @@ package com.songdehuai.commonlib.base;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.Callback;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
-import com.lzy.okgo.model.Progress;
-import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.base.Request;
 import com.songdehuai.commonlib.net.ResultCallBack;
 
 import java.util.LinkedHashMap;

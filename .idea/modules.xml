@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CommonExample.iml" filepath="$PROJECT_DIR$/.idea/CommonExample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CommonExample.iml" filepath="$PROJECT_DIR$/CommonExample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonlib/commonLib.iml" filepath="$PROJECT_DIR$/commonlib/commonLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/okgo/okgo.iml" filepath="$PROJECT_DIR$/okgo/okgo.iml" />
     </modules>
   </component>
 </project>

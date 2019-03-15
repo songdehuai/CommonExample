@@ -43,7 +43,7 @@ public class TestActivity extends AppCompatActivity {
         ImagePicker.getInstance().startImagePicker(this, new ImagePickerCallBack() {
             @Override
             public void onSuccess(Uri uri, String filePath) {
-
+                
             }
         });
 

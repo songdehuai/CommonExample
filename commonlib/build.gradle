@@ -5,8 +5,6 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
 
-
-
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
@@ -28,14 +26,10 @@ android {
 
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-
-    api 'com.lzy.net:okgo:3.0.4'
-
-    api 'com.alibaba:fastjson:1.1.70.android'
-
-    implementation 'com.google.code.gson:gson:2.8.5'
-
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
+    api 'com.alibaba:fastjson:1.2.56'
+    api 'com.google.code.gson:gson:2.8.5'
+    api project(':okgo')
 }

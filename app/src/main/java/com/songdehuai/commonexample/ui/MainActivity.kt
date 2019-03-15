@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.lzy.okgo.model.Response
 import com.songdehuai.commonexample.R
-import com.songdehuai.commonexample.ui.account.entity.LoginEntity
 import com.songdehuai.commonexample.ui.account.entity.LoginParams
 import com.songdehuai.commonlib.net.Result
 import com.songdehuai.commonlib.net.ResultCallBack
@@ -20,22 +19,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
         test_btn.setOnClickListener {
-            for (i in 0..100) {
-                val loginParams = LoginParams()
-                loginParams.builder<LoginParams> {
-                    it.loginName = "17649851614"
-                    it.loginPwd = "111111"
-                    it.appType = "1"
-                    it.postJson(
-                        "http://192.168.2.102/freight/login",
-                        object : ResultCallBack<String>() {
-                            override fun onSuccess(response: Response<String>?) {
-                                log(response!!.body() + "  " + i)
-                            }
-                        })
-                }
-            }
-
+            val loginParams = LoginParams()
+            loginParams.userType = "1"
+            loginParams.loginName = "17649851614"
+            loginParams.loginPwd = "111111"
+            loginParams.appType = "1"
+            loginParams.userType = "2"
+            loginParams.postJson(
+                "http://192.168.2.102/freight/login",
+                object : ResultCallBack<Result<*>>() {
+                    override fun onSuccess(response: Response<Result<*>>?) {
+                        log(response?.body().toString())
+                    }
+                })
         }
     }
 

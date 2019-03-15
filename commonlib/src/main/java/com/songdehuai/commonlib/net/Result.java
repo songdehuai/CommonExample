@@ -1,5 +1,9 @@
 package com.songdehuai.commonlib.net;
 
+import com.alibaba.fastjson.JSONObject;
+
+import androidx.annotation.NonNull;
+
 /**
  * 数据泛型
  *
@@ -33,5 +37,11 @@ public class Result<T> {
 
     public void setT(T result) {
         this.result = result;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }
