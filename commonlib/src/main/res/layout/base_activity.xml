@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.songdehuai.commonlib.widget.TitleView
+    <com.songdehuai.commonlib.widget.title.TitleView
+        android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="48dp" />
 

@@ -12,7 +12,9 @@ import com.lzy.okgo.model.Response;
 import com.songdehuai.commonexample.R;
 import com.songdehuai.commonexample.ui.account.entity.LoginEntity;
 import com.songdehuai.commonexample.ui.account.entity.LoginParams;
+import com.songdehuai.commonlib.base.BaseActivity;
 import com.songdehuai.commonlib.base.BaseParams;
+import com.songdehuai.commonlib.base.BaseSync;
 import com.songdehuai.commonlib.base.ParamsBuilder;
 import com.songdehuai.commonlib.net.Result;
 import com.songdehuai.commonlib.net.ResultCallBack;
@@ -26,7 +28,7 @@ import java.util.HashMap;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends BaseActivity<String> implements BaseSync<String> {
 
     private Button send_btn;
     private EditText log_et;
@@ -43,7 +45,7 @@ public class TestActivity extends AppCompatActivity {
         ImagePicker.getInstance().startImagePicker(this, new ImagePickerCallBack() {
             @Override
             public void onSuccess(Uri uri, String filePath) {
-                
+
             }
         });
 
@@ -55,4 +57,9 @@ public class TestActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void showData(String s) {
+        super.showData(s);
+
+    }
 }
