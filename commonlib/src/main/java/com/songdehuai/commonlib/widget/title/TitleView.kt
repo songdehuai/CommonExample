@@ -14,8 +14,10 @@ import com.songdehuai.commonlib.R
  * 标题控件
  */
 class TitleView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
+
     RelativeLayout(context, attrs, defStyleAttr) {
 
+    private var titleType = TitleType.NONE
     private var finishTv: TextView? = null
     private var finishIv: ImageView? = null
     private var titleTv: TextView? = null
@@ -49,21 +51,37 @@ class TitleView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         rightRl = findViewById(R.id.title_right_rl)
         rightIv = findViewById(R.id.title_right_iv)
 
-        rightRl!!.visibility = View.GONE
+        rightRl?.visibility = View.GONE
+
+        rightRl?.setOnClickListener {
+            titleCallBack?.onPublish()
+        }
+        finishLi?.setOnClickListener {
+            titleCallBack?.onBack()
+        }
     }
 
-    fun setTitleCallBack(titleCallBack: TitleCallBack) {
+    fun setTitleCallBack(titleType: TitleType, titleCallBack: TitleCallBack) {
+        this.titleType = titleType
         this.titleCallBack = titleCallBack
-        when (titleCallBack) {
-            is TitleCallBack.DetailCallBack -> {
+        when (titleType) {
+            TitleType.NONE -> {
                 rightRl?.visibility = View.INVISIBLE
+                finishLi?.visibility = View.INVISIBLE
+            }
+            TitleType.DETAIL -> {
+                rightRl?.visibility = View.INVISIBLE
+            }
+            TitleType.PUBLISH -> {
+                rightRl?.visibility = VISIBLE
             }
         }
     }
 
 
     fun setTitleText(titleText: String) {
-        titleTv!!.text = titleText
+        titleTv?.text = titleText
     }
+
 
 }

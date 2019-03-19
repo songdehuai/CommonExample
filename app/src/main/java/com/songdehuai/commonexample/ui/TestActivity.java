@@ -28,7 +28,7 @@ import java.util.HashMap;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class TestActivity extends BaseActivity<String> implements BaseSync<String> {
+public class TestActivity extends BaseActivity  {
 
     private Button send_btn;
     private EditText log_et;
@@ -42,24 +42,18 @@ public class TestActivity extends BaseActivity<String> implements BaseSync<Strin
         log_et = findViewById(R.id.log_et);
 
 
-        ImagePicker.getInstance().startImagePicker(this, new ImagePickerCallBack() {
-            @Override
-            public void onSuccess(Uri uri, String filePath) {
-
-            }
-        });
-
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                ImagePicker.getInstance().startImagePicker(TestActivity.this, new ImagePickerCallBack() {
+                    @Override
+                    public void onSuccess(Uri uri, String filePath) {
+
+                    }
+                });
             }
         });
     }
 
-    @Override
-    public void showData(String s) {
-        super.showData(s);
-
-    }
 }

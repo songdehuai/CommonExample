@@ -1,19 +1,19 @@
 package com.songdehuai.commonexample.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.lzy.okgo.model.Response
 import com.songdehuai.commonexample.R
 import com.songdehuai.commonexample.ui.account.entity.LoginParams
+import com.songdehuai.commonlib.base.BaseActivity
 import com.songdehuai.commonlib.net.Result
 import com.songdehuai.commonlib.net.ResultCallBack
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main,"你好")
         initViews()
     }
 

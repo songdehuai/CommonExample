@@ -5,15 +5,15 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.songdehuai.commonlib.R
 import com.songdehuai.commonlib.widget.title.TitleCallBack
+import com.songdehuai.commonlib.widget.title.TitleType
 import kotlinx.android.synthetic.main.base_activity.*
 
 
 /**
  * BaseActivity
  */
-open class BaseActivity<DataType> : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity(), TitleCallBack {
 
-    private var data: DataType? = null
     private lateinit var mConentView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,17 +21,18 @@ open class BaseActivity<DataType> : AppCompatActivity() {
         setContentView(R.layout.base_activity)
     }
 
-
-    fun setContentView(layoutId: Int, title: String, callBack: TitleCallBack.DetailCallBack) {
+    open fun setContentView(layoutId: Int, title: String) {
         titleView.setTitleText(title)
-        titleView.setTitleCallBack(callBack)
-        setContentView(layoutId)
+        titleView.setTitleCallBack(TitleType.DETAIL, this)
+        mConentView = View.inflate(this, layoutId, null)
+        content_fl.addView(mConentView)
+    }
+
+    override fun onPublish() {
 
     }
 
-
-    open fun showData(dataType: DataType) {
-
+    override fun onBack() {
+        finish()
     }
-
 }
