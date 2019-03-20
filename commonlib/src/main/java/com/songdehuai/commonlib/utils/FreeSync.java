@@ -53,13 +53,13 @@ public class FreeSync {
         }
     }
 
-    public void callBack(String name, Object object) {
+    public void callBack(String name, Object obj) {
         ArrayList<FreeSyncCallback> callBackList;
         for (String s : freeSyncCallbackHashMap.keySet()) {
             if (name.equals(s)) {
                 callBackList = freeSyncCallbackHashMap.get(s);
                 for (int i = 0; i < callBackList.size(); i++) {
-                    callBackList.get(i).onCallBack(name, object);
+                    callBackList.get(i).onCallBack(name, obj);
                 }
             }
         }

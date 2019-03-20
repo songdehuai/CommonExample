@@ -28,7 +28,7 @@ import java.util.HashMap;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class TestActivity extends BaseActivity  {
+public class TestActivity extends BaseActivity {
 
     private Button send_btn;
     private EditText log_et;
@@ -48,7 +48,7 @@ public class TestActivity extends BaseActivity  {
 
                 ImagePicker.getInstance().startImagePicker(TestActivity.this, new ImagePickerCallBack() {
                     @Override
-                    public void onSuccess(Uri uri, String filePath) {
+                    public void onGetImage(String filePath) {
 
                     }
                 });

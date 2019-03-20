@@ -13,15 +13,25 @@ public class ImagePicker {
     public static ImagePicker getInstance() {
         return imagePicker;
     }
-    public void startImagePicker(Context context, ImagePickerCallBack imagePickerCallBack) {
-        this.imagePickerCallBack = imagePickerCallBack;
+
+    public void startCameraPicker(Context context, ImagePickerCallBack imagePickerCallBack) {
+        ImagePicker.imagePickerCallBack = imagePickerCallBack;
         Intent intent = new Intent(context, ImagePickerCalBackActivity.class);
+        intent.putExtra("isCamera", true);
         context.startActivity(intent);
     }
 
-    public void onSuccess(Uri uri, String filePath) {
+
+    public void startImagePicker(Context context, ImagePickerCallBack imagePickerCallBack) {
+        ImagePicker.imagePickerCallBack = imagePickerCallBack;
+        Intent intent = new Intent(context, ImagePickerCalBackActivity.class);
+        intent.putExtra("isCamera", false);
+        context.startActivity(intent);
+    }
+
+    void onSuccess(String filePath) {
         if (imagePickerCallBack != null) {
-            imagePickerCallBack.onSuccess(uri, filePath);
+            imagePickerCallBack.onGetImage(filePath);
         }
     }
 }

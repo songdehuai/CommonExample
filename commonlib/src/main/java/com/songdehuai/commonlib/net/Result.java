@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
  */
 public class Result<T> {
 
+    public Result(){
+        
+    }
+
     private String code;
     private String message;
     private T result;

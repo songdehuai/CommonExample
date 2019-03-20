@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
 
     <Button
@@ -20,10 +19,15 @@
         android:layout_height="wrap_content"
         android:text="清除" />
 
+    <ImageView
+        android:id="@+id/main_iv"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
     <EditText
         android:id="@+id/log_et"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
         android:editable="false"
         android:gravity="left"
         android:padding="4dp"
