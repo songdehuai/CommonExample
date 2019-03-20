@@ -2,12 +2,13 @@ package com.songdehuai.commonlib.base;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.HttpParams;
 import com.songdehuai.commonlib.net.ResultCallBack;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import okgo.OkGo;
+import okgo.model.HttpParams;
 
 
 /**

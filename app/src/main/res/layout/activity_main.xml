@@ -17,7 +17,7 @@
         android:id="@+id/status_tn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="清除" />
+        android:text="网络请求" />
 
     <ImageView
         android:id="@+id/main_iv"

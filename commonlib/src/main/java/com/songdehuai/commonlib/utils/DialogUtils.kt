@@ -1,11 +1,9 @@
 package com.songdehuai.commonlib.utils
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import com.lzy.okgo.OkGo
 import com.songdehuai.commonlib.R
 
 /**

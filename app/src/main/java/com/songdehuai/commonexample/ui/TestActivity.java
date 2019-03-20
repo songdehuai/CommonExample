@@ -1,32 +1,17 @@
 package com.songdehuai.commonexample.ui;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.alibaba.fastjson.JSON;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.songdehuai.commonexample.R;
-import com.songdehuai.commonexample.ui.account.entity.LoginEntity;
-import com.songdehuai.commonexample.ui.account.entity.LoginParams;
 import com.songdehuai.commonlib.base.BaseActivity;
-import com.songdehuai.commonlib.base.BaseParams;
-import com.songdehuai.commonlib.base.BaseSync;
-import com.songdehuai.commonlib.base.ParamsBuilder;
-import com.songdehuai.commonlib.net.Result;
-import com.songdehuai.commonlib.net.ResultCallBack;
-import com.songdehuai.commonlib.utils.FreeSync;
 import com.songdehuai.commonlib.utils.imagepicker.ImagePicker;
 import com.songdehuai.commonlib.utils.imagepicker.ImagePickerCallBack;
 
 
-import java.util.HashMap;
-
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class TestActivity extends BaseActivity {
 

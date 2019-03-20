@@ -21,3 +21,13 @@ dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     api 'com.squareup.okhttp3:okhttp:3.10.0'
 }
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.2'
+    }
+}
