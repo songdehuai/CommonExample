@@ -1,12 +1,12 @@
 package com.songdehuai.commonexample.ui
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import com.songdehuai.commonexample.R
-import com.songdehuai.commonexample.ui.account.entity.LoginParams
 import com.songdehuai.commonlib.base.BaseActivity
-import com.songdehuai.commonlib.net.ResultCallBack
+import com.songdehuai.commonlib.utils.filter.QuickClick
 import kotlinx.android.synthetic.main.activity_main.*
-import okgo.model.Response
 
 class MainActivity : BaseActivity() {
 
@@ -17,20 +17,16 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initViews() {
-        test_btn.setOnClickListener {
-            showImagePickerDialog()
-        }
+
+        test_btn.setOnClickListener(object : View.OnClickListener {
+            @QuickClick
+            override fun onClick(v: View?) {
+                Log.i("test_btn", "正常点击")
+            }
+
+        })
         status_tn.setOnClickListener {
-            val loginParams = LoginParams()
-            loginParams.loginName = "17649851614"
-            loginParams.loginPwd = "111111"
-            loginParams.postJson(
-                "http://192.168.2.102/freight/login",
-                object : ResultCallBack<com.songdehuai.commonlib.net.Result<String>>() {
-                    override fun onSuccess(response: Response<com.songdehuai.commonlib.net.Result<String>>?) {
-                        log(response?.body().toString())
-                    }
-                })
+            Log.i("ClickFilter", "正常点击")
         }
     }
 

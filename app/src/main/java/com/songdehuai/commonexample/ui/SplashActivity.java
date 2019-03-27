@@ -17,7 +17,6 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
         splashIv = findViewById(R.id.splash_iv);
         splashIv.postDelayed(new Runnable() {
             @Override

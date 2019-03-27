@@ -1,8 +1,6 @@
 package com.songdehuai.commonlib.base
 
-import android.content.DialogInterface
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -33,7 +31,6 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
         super.onCreate(savedInstanceState)
         setContentView(layout.base_activity)
         init()
-
     }
 
     private fun init() {
