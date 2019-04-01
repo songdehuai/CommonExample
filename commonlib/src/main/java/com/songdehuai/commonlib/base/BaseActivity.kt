@@ -1,5 +1,6 @@
 package com.songdehuai.commonlib.base
 
+import android.app.Activity
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
@@ -21,12 +22,13 @@ import kotlinx.android.synthetic.main.base_activity.*
  * BaseActivity
  * @author songdehuai
  */
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBack {
-
 
     private lateinit var mContentView: View
     private lateinit var titleDrawable: Drawable
     private lateinit var dialogUtils: DialogUtils
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout.base_activity)
@@ -87,6 +89,19 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
     open fun setContentView(layoutId: Int, title: CharSequence) {
         titleView.setTitleText(title)
         titleView.setTitleCallBack(TitleType.DETAIL, this)
+        mContentView = View.inflate(this, layoutId, null)
+        content_fl.removeAllViews()
+        content_fl.addView(mContentView)
+    }
+
+    /**
+     * 设置ContentView，仅带标题
+     * @param layoutId 布局id
+     * @param title 标题
+     */
+    open fun setContentViewNone(layoutId: Int, title: CharSequence) {
+        titleView.setTitleText(title)
+        titleView.setTitleCallBack(TitleType.NONE, this)
         mContentView = View.inflate(this, layoutId, null)
         content_fl.removeAllViews()
         content_fl.addView(mContentView)
@@ -185,7 +200,7 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
     open fun showImagePickerDialog() {
         val items = arrayOf("相册", "相机")
         AlertDialog.Builder(this@BaseActivity)
-            .setItems(items) { dialog, which ->
+            .setItems(items) { _, which ->
                 when (which) {
                     0 -> {
                         startImagePicker()

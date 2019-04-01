@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.songdehuai.commonlib.utils.ultimatebar
 
 import android.annotation.SuppressLint
@@ -310,6 +312,7 @@ object StatusBarUtils {
     ) {
         var statusBarView: View? = decorView.findViewWithTag(TAG_STATUS_BAR)
         val navigationBarView: View? = decorView.findViewWithTag(TAG_NAVIGATION_BAR)
+
         if (statusBarView == null) {
             statusBarView = createStatusBarView(context, background)
             statusBarView.tag = TAG_STATUS_BAR

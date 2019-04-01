@@ -52,7 +52,7 @@ class DialogUtils(activity: Activity) {
         dialogBuilder = AlertDialog.Builder(mActivity)
         dialogBuilder.setPositiveButton(
             "确定"
-        ) { dialog, which -> }
+        ) { _, _ -> }
         dialog = dialogBuilder.create()
         init = true
     }

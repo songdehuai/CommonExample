@@ -1,54 +1,54 @@
-package com.songdehuai.commonlib.base;
+package com.songdehuai.commonlib.base
 
 
 /**
  * BaseSync
  */
-public interface BaseSync {
+interface BaseSync {
 
     /**
      * 显示Toast
      *
      * @param toast Toast内容
      */
-    void showTaost(String toast);
+    fun showTaost(toast: String)
 
     /**
      * 显示LoadDialog
      *
      * @param text 内容
      */
-    void showLoadDialog(String text);
+    fun showLoadDialog(text: String)
 
     /**
      * 关闭 LoadDialog
      */
-    void dismissLoadDialog();
+    fun dismissLoadDialog()
 
     /**
      * 显示一个Dialog
      *
      * @param text 内容
      */
-    void showDialog(String text);
+    fun showDialog(text: String)
 
     /**
      * 关闭 Dialog
      */
-    void dismissDialog();
+    fun dismissDialog()
 
     /**
      * 启动图片选择器
      */
-    void startImagePicker();
+    fun startImagePicker()
 
     /**
      * 启动相机拍照
      */
-    void startCamera();
+    fun startCamera()
 
     /**
      * 显示图片选择器，图片和相机
      */
-    void showImagePickerDialog();
+    fun showImagePickerDialog()
 }

@@ -41,6 +41,8 @@ import androidx.core.content.FileProvider;
 public class AppUtils {
 
 
+
+
     /**
      * 获得View的截屏 Bitmap
      *

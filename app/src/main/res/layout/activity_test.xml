@@ -10,11 +10,4 @@
         android:layout_height="wrap_content"
         android:text="test" />
 
-    <EditText
-        android:id="@+id/log_et"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="#555555"
-        android:editable="false"
-        android:textColor="#fff" />
 </LinearLayout>
