@@ -2,7 +2,9 @@
     package="com.songdehuai.commonlib">
 
     <application>
-        <activity android:name=".utils.imagepicker.ImagePickerCalBackActivity" />
+        <activity android:name=".utils.imagepicker.CameraPickerCalBackActivity" />
+        <activity android:name=".utils.imagepicker.MultImagePickerActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"

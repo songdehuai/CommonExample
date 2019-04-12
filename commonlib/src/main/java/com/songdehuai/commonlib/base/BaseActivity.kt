@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.songdehuai.commonlib.R.*
 import com.songdehuai.commonlib.R.drawable.bg_title
 import com.songdehuai.commonlib.utils.DialogUtils
+import com.songdehuai.commonlib.utils.imagepicker.ImageItem
 import com.songdehuai.commonlib.utils.imagepicker.ImagePicker
 import com.songdehuai.commonlib.utils.imagepicker.ImagePickerCallBack
 import com.songdehuai.commonlib.utils.ultimatebar.StatusBar
@@ -23,12 +24,14 @@ import kotlinx.android.synthetic.main.base_activity.*
  * @author songdehuai
  */
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBack {
+open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBack,
+    ImagePickerCallBack.MultiImagePickerCallBack {
+
 
     private lateinit var mContentView: View
     private lateinit var titleDrawable: Drawable
     private lateinit var dialogUtils: DialogUtils
-
+    open lateinit var thisActivity: Activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout.base_activity)
@@ -36,6 +39,7 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
     }
 
     private fun init() {
+        thisActivity = this
         initTitle()
         dialogUtils = DialogUtils(this)
     }
@@ -58,6 +62,13 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
      * 显示图片
      */
     override fun onGetImage(filePath: String?) {
+
+    }
+
+    /**
+     * 多图选择
+     */
+    override fun onMultiImageSuccess(imageItemList: MutableSet<ImageItem>?) {
 
     }
 
@@ -120,6 +131,14 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
         mContentView = View.inflate(this, layoutId, null)
         content_fl.removeAllViews()
         content_fl.addView(mContentView)
+    }
+
+
+    /**
+     * 设置TitleView右侧按钮点击文字
+     */
+    open fun setTitlePublishText(text: CharSequence) {
+        titleView?.setPublishText(text)
     }
 
     /**
@@ -192,6 +211,13 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
      */
     open fun startCamera() {
         ImagePicker.getInstance().startCameraPicker(this, this)
+    }
+
+    /**
+     * 启动多图选择
+     */
+    open fun startMultiImagePicker() {
+        ImagePicker.getInstance().startMultiImagePicker(this, this)
     }
 
     /**

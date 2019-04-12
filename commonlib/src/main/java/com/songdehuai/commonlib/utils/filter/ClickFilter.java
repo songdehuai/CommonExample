@@ -2,6 +2,8 @@ package com.songdehuai.commonlib.utils.filter;
 
 import android.util.Log;
 
+import com.songdehuai.commonlib.utils.LogUtil;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -13,7 +15,7 @@ import org.aspectj.lang.annotation.Pointcut;
 public class ClickFilter {
 
     private static Long sLastclick = 0L;
-    private static final Long FILTER_TIMEM = 1000L;
+    private static final Long FILTER_TIMEM = 300L;
     private boolean canDoubleClick = false;
 
     @Pointcut("execution(@ com.songdehuai.commonlib.utils.filter.QuickClick * *(..))")
@@ -37,7 +39,7 @@ public class ClickFilter {
                 throwable.printStackTrace();
             }
         } else {
-            Log.e("ClickFilter", "重复点击,已过滤");
+            LogUtil.e("重复点击,已过滤");
         }
     }
 }

@@ -4,6 +4,8 @@ import android.util.ArrayMap;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 
 /**
@@ -16,12 +18,12 @@ public class FreeSync {
      */
     private static final String DEFAULTFREESYNCNAME = "FREESYNC_DEFAULTFREESYNCNAME";
 
-    private LinkedHashMap<String, ArrayList<FreeSyncCallback>> freeSyncCallbackHashMap = new LinkedHashMap<>();
-    private static ArrayMap<String, FreeSync> freeSyncArrayMap = new ArrayMap<>();
+    private ConcurrentSkipListMap<String, ArrayList<FreeSyncCallback>> freeSyncCallbackHashMap = new ConcurrentSkipListMap<>();
+    private static ConcurrentSkipListMap<String, FreeSync> freeSyncArrayMap = new ConcurrentSkipListMap<>();
     private static FreeSync freeSync = new FreeSync();
 
     private FreeSync() {
-
+        
     }
 
     public static FreeSync defaultFreeSync() {
@@ -52,6 +54,19 @@ public class FreeSync {
             freeSyncCallbackHashMap.put(name, callBackList);
         }
     }
+
+    public void addCallBackOnly(String name, FreeSyncCallback freeSyncCallback) {
+        for (String s : freeSyncCallbackHashMap.keySet()) {
+            if (name.equals(s)) {
+                freeSyncCallbackHashMap.remove(s);
+            }
+        }
+        ArrayList<FreeSyncCallback> callBackList = new ArrayList<>();
+        callBackList.add(freeSyncCallback);
+        freeSyncCallbackHashMap.put(name, callBackList);
+
+    }
+
 
     public void callBack(String name, Object obj) {
         ArrayList<FreeSyncCallback> callBackList;
@@ -105,6 +120,7 @@ public class FreeSync {
     }
 
     public interface FreeSyncCallback {
-        void onCallBack(String name, Object object);
+
+        void onCallBack(String name, Object obj);
     }
 }
