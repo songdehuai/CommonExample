@@ -1,5 +1,6 @@
 package com.songdehuai.commonlib.utils.imagepicker;
 
+import android.Manifest;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +11,8 @@ import com.songdehuai.commonlib.R;
 import com.songdehuai.commonlib.base.BaseActivity;
 import com.songdehuai.commonlib.task.AbsTask;
 import com.songdehuai.commonlib.task.Task;
-import com.songdehuai.commonlib.utils.imagepicker.adapter.MultImageAdapter;
+import com.songdehuai.commonlib.utils.grantor.PermissionListener;
+import com.songdehuai.commonlib.utils.grantor.PermissionsUtil;
 import com.songdehuai.commonlib.utils.imagepicker.adapter.MultImageReAdapter;
 
 import org.jetbrains.annotations.Nullable;
@@ -19,10 +21,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
  * 多图选择
@@ -30,7 +33,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 public class MultImagePickerActivity extends BaseActivity {
 
     private GridView imageLv;
-    private List<ImageItem> imageItems = new ArrayList<>();
+    private CopyOnWriteArrayList<ImageItem> imageItems = new CopyOnWriteArrayList<>();
     private RecyclerView imageRv;
     private MultImageReAdapter multMapAdapter;
 
@@ -51,19 +54,30 @@ public class MultImagePickerActivity extends BaseActivity {
     }
 
     private void initViews() {
-        getLocalImages();
         imageRv = findViewById(R.id.image_rv);
         imageLv = findViewById(R.id.image_lv);
         multMapAdapter = new MultImageReAdapter(thisActivity);
         imageRv.setLayoutManager(new GridLayoutManager(this, 3));
         imageRv.setAdapter(multMapAdapter);
         multMapAdapter.setOnSelectImageListener((isChecked, selectImages) -> setTitlePublishText("确定 (" + selectImages.size() + ")"));
+        PermissionsUtil.requestPermission(thisActivity, new PermissionListener() {
+            @Override
+            public void permissionGranted(@NonNull String[] permission) {
+                getLocalImages();
+            }
+
+            @Override
+            public void permissionDenied(@NonNull String[] permission) {
+
+            }
+        }, Manifest.permission.READ_EXTERNAL_STORAGE);
+
     }
 
     private void getLocalImages() {
-        Task.task().start(new AbsTask<List<ImageItem>>() {
+        Task.task().start(new AbsTask<CopyOnWriteArrayList<ImageItem>>() {
             @Override
-            protected List<ImageItem> doBackground() {
+            protected CopyOnWriteArrayList<ImageItem> doBackground() {
                 HashMap<String, List<ImageItem>> allPhotosTemp = new HashMap<>();//所有照片
                 Uri mImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
                 String[] projImage = {MediaStore.Images.Media._ID
@@ -103,13 +117,13 @@ public class MultImagePickerActivity extends BaseActivity {
             }
 
             @Override
-            protected void onSuccess(List<ImageItem> result) {
+            protected void onSuccess(CopyOnWriteArrayList<ImageItem> result) {
                 multMapAdapter.setImageItemList(result);
             }
 
             @Override
             protected void onError(Throwable ex, boolean isCallbackError) {
-
+                ex.printStackTrace();
             }
         });
     }

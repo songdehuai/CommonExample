@@ -14,19 +14,17 @@
         android:id="@+id/status_tn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="网络请求" />
+        android:text="时间" />
 
-    <ImageView
-        android:id="@+id/main_iv"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
-
-    <EditText
-        android:id="@+id/log_et"
+    <com.songdehuai.widget.myrefreshlayout.MyRefreshLayout
+        android:id="@+id/refresh_rl"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:editable="false"
-        android:gravity="left"
-        android:padding="4dp"
-        android:textColor="#000" />
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/log_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="4dp"
+            android:textColor="#000" />
+    </com.songdehuai.widget.myrefreshlayout.MyRefreshLayout>
 </LinearLayout>

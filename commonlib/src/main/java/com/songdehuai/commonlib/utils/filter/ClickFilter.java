@@ -39,7 +39,7 @@ public class ClickFilter {
                 throwable.printStackTrace();
             }
         } else {
-            LogUtil.e("重复点击,已过滤");
+            LogUtil.w("重复点击,已过滤");
         }
     }
 }

@@ -224,7 +224,7 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
      * 显示图片选择器，图片和相机
      */
     open fun showImagePickerDialog() {
-        val items = arrayOf("相册", "相机")
+        val items = arrayOf("相册", "相机", "多图")
         AlertDialog.Builder(this@BaseActivity)
             .setItems(items) { _, which ->
                 when (which) {
@@ -233,6 +233,9 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
                     }
                     1 -> {
                         startCamera()
+                    }
+                    2 -> {
+                        startMultiImagePicker()
                     }
                 }
             }.show()

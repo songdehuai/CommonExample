@@ -13,7 +13,7 @@ class CommApplication : Application() {
     }
 
     private fun init() {
-        FreeSync.defaultFreeSync().addCallBack("test") { _, _ ->
+        FreeSync.defaultFreeSync().addCall("test") { _, _ ->
             val intent = Intent(this, DialogActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)

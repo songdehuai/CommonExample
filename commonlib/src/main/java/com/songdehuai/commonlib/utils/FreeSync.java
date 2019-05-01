@@ -1,11 +1,7 @@
 package com.songdehuai.commonlib.utils;
 
-import android.util.ArrayMap;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 /**
@@ -18,12 +14,12 @@ public class FreeSync {
      */
     private static final String DEFAULTFREESYNCNAME = "FREESYNC_DEFAULTFREESYNCNAME";
 
-    private ConcurrentSkipListMap<String, ArrayList<FreeSyncCallback>> freeSyncCallbackHashMap = new ConcurrentSkipListMap<>();
-    private static ConcurrentSkipListMap<String, FreeSync> freeSyncArrayMap = new ConcurrentSkipListMap<>();
+    private ConcurrentHashMap<String, CopyOnWriteArrayList<FreeSyncCallback>> freeSyncCallbackHashMap = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, FreeSync> freeSyncArrayMap = new ConcurrentHashMap<>();
     private static FreeSync freeSync = new FreeSync();
 
     private FreeSync() {
-        
+
     }
 
     public static FreeSync defaultFreeSync() {
@@ -40,7 +36,7 @@ public class FreeSync {
         }
     }
 
-    public void addCallBack(String name, FreeSyncCallback freeSyncCallback) {
+    public synchronized void addCall(String name, FreeSyncCallback freeSyncCallback) {
         boolean isHas = false;
         for (String s : freeSyncCallbackHashMap.keySet()) {
             if (name.equals(s)) {
@@ -49,27 +45,27 @@ public class FreeSync {
             }
         }
         if (!isHas) {
-            ArrayList<FreeSyncCallback> callBackList = new ArrayList<>();
+            CopyOnWriteArrayList<FreeSyncCallback> callBackList = new CopyOnWriteArrayList<>();
             callBackList.add(freeSyncCallback);
             freeSyncCallbackHashMap.put(name, callBackList);
         }
     }
 
-    public void addCallBackOnly(String name, FreeSyncCallback freeSyncCallback) {
+    public synchronized void addCallOnly(String name, FreeSyncCallback freeSyncCallback) {
         for (String s : freeSyncCallbackHashMap.keySet()) {
             if (name.equals(s)) {
                 freeSyncCallbackHashMap.remove(s);
             }
         }
-        ArrayList<FreeSyncCallback> callBackList = new ArrayList<>();
+        CopyOnWriteArrayList<FreeSyncCallback> callBackList = new CopyOnWriteArrayList<>();
         callBackList.add(freeSyncCallback);
         freeSyncCallbackHashMap.put(name, callBackList);
 
     }
 
 
-    public void callBack(String name, Object obj) {
-        ArrayList<FreeSyncCallback> callBackList;
+    public synchronized void call(String name, Object obj) {
+        CopyOnWriteArrayList<FreeSyncCallback> callBackList;
         for (String s : freeSyncCallbackHashMap.keySet()) {
             if (name.equals(s)) {
                 callBackList = freeSyncCallbackHashMap.get(s);
@@ -80,8 +76,8 @@ public class FreeSync {
         }
     }
 
-    public void callBack(String name) {
-        ArrayList<FreeSyncCallback> callBackList;
+    public synchronized void fastCall(String name) {
+        CopyOnWriteArrayList<FreeSyncCallback> callBackList;
         for (String s : freeSyncCallbackHashMap.keySet()) {
             if (name.equals(s)) {
                 callBackList = freeSyncCallbackHashMap.get(s);
@@ -92,7 +88,19 @@ public class FreeSync {
         }
     }
 
-    public void removeCallBack(String name) {
+    public synchronized void call(String name) {
+        CopyOnWriteArrayList<FreeSyncCallback> callBackList;
+        for (String s : freeSyncCallbackHashMap.keySet()) {
+            if (name.equals(s)) {
+                callBackList = freeSyncCallbackHashMap.get(s);
+                for (int i = 0; i < callBackList.size(); i++) {
+                    callBackList.get(i).onCallBack(name, "");
+                }
+            }
+        }
+    }
+
+    public synchronized void removeCall(String name) {
         for (String s : freeSyncCallbackHashMap.keySet()) {
             if (name.equals(s)) {
                 freeSyncCallbackHashMap.remove(name);
@@ -100,7 +108,7 @@ public class FreeSync {
         }
     }
 
-    public void removeFreeSync(String name) {
+    public synchronized void removeFreeSync(String name) {
         for (String s : freeSyncArrayMap.keySet()) {
             if (name.equals(s)) {
                 freeSyncArrayMap.remove(name);
@@ -108,11 +116,11 @@ public class FreeSync {
         }
     }
 
-    public void clearAllDefault() {
+    public synchronized void clearAllDefault() {
         freeSyncCallbackHashMap.clear();
     }
 
-    public void clearAllWithName(String name) {
+    public synchronized void clearAllWithName(String name) {
         FreeSync freeSync = freeSyncWithName(name);
         if (freeSync != null) {
             freeSync.freeSyncCallbackHashMap.clear();

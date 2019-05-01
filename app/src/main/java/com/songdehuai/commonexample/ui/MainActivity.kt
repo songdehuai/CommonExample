@@ -1,18 +1,22 @@
 package com.songdehuai.commonexample.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import com.songdehuai.commonexample.R
-import com.songdehuai.commonexample.service.SocketService
+import com.songdehuai.commonexample.ui.adapter.MainListAdapter
 import com.songdehuai.commonlib.base.BaseActivity
 import com.songdehuai.commonlib.utils.FreeSync
+import com.songdehuai.commonlib.utils.imagepicker.ImageItem
+import com.songdehuai.widget.myrefreshlayout.MyRefreshLayout
+import com.songdehuai.widget.myrefreshlayout.RefreshListenerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
-
+import kotlin.collections.ArrayList
 
 class MainActivity : BaseActivity() {
 
+    lateinit var freeSync: FreeSync
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,27 +24,42 @@ class MainActivity : BaseActivity() {
         initViews()
     }
 
-    lateinit var freeSync: FreeSync
-    private fun initViews() {
-        test_btn.setOnClickListener {
-            val intent = Intent(this@MainActivity,TestActivity::class.java)
-            startActivity(intent)
+    var adapter: MainListAdapter? = null
 
+    private fun initViews() {
+        adapter = MainListAdapter(thisActivity)
+        log_lv.adapter = adapter
+        test_btn.setOnClickListener {
+            adapter?.isPass = true
+            adapter?.notifyDataSetChanged()
         }
         status_tn.setOnClickListener {
-            val intent = Intent(this, SocketService::class.java)
-            startService(intent)
+            adapter?.isPass = false
+            adapter?.notifyDataSetChanged()
         }
+        refresh_rl.setOnRefreshListener(object : RefreshListenerAdapter() {
+            override fun onRefresh(refreshLayout: MyRefreshLayout?) {
+                super.onRefresh(refreshLayout)
+                adapter?.setList(getNewData())
+                refresh_rl.finish()
+            }
 
-        freeSync = FreeSync.freeSyncWithName(SocketService.SOCKETFREESYNCNAME)
-        freeSync.addCallBack(SocketService.SOCKETFREESYNCNAME_MESSAGE,
-            object : FreeSync.FreeSyncCallback {
-                override fun onCallBack(name: String?, `object`: Any?) {
-                    log(`object`.toString())
-                }
+            override fun onLoadMore(refreshLayout: MyRefreshLayout?) {
+                super.onLoadMore(refreshLayout)
+                adapter?.addList(getNewData())
+                refresh_rl.finish()
+            }
+        })
+        refresh_rl.startRefresh()
 
-            })
+    }
 
+    fun getNewData(): ArrayList<String> {
+        var list = ArrayList<String>()
+        for (i in 1..10) {
+            list.add(UUID.randomUUID().toString())
+        }
+        return list
     }
 
     override fun onPublish() {
@@ -49,6 +68,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun log(str: String) {
-        log_et.append("$str\n")
+
     }
 }

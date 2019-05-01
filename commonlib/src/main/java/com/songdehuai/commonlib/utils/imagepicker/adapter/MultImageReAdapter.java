@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,15 +29,15 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MultImageReAdapter extends RecyclerView.Adapter<MultImageReAdapter.ViewHolder> {
 
     private Activity activity;
-    private List<ImageItem> imageItemList;
+    private CopyOnWriteArrayList<ImageItem> imageItemList;
     private OnSelectImageListener onSelectImageListener;
 
     public MultImageReAdapter(Activity activity) {
         this.activity = activity;
-        this.imageItemList = new ArrayList<>();
+        this.imageItemList = new CopyOnWriteArrayList<>();
     }
 
-    public void setImageItemList(List<ImageItem> imageItemList) {
+    public void setImageItemList(CopyOnWriteArrayList<ImageItem> imageItemList) {
         this.imageItemList = imageItemList;
         notifyDataSetChanged();
     }
@@ -65,7 +66,7 @@ public class MultImageReAdapter extends RecyclerView.Adapter<MultImageReAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ImageItem imageItem = imageItemList.get(position);
-        Glide.with(activity).load(imageItem.getFilePath()).into(holder.imageView);
+        Glide.with(activity).load(imageItem.getFilePath()).thumbnail(0.1f).into(holder.imageView);
         holder.checkBox.setChecked(imageItem.isCheck());
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             imageItemList.get(position).setCheck(!imageItem.isCheck());

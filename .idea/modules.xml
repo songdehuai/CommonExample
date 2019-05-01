@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CommonExample.iml" filepath="$PROJECT_DIR$/.idea/CommonExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RefreshLayout/RefreshLayout.iml" filepath="$PROJECT_DIR$/RefreshLayout/RefreshLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonlib/commonLib.iml" filepath="$PROJECT_DIR$/commonlib/commonLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/websocket/websocket.iml" filepath="$PROJECT_DIR$/websocket/websocket.iml" />
     </modules>
   </component>
 </project>
