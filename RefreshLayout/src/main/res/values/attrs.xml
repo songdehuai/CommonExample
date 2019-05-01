@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <declare-styleable name="MyRefreshLayout" tools:ignore="MissingDefaultResource">
+        <attr name="rf_max_head_height" format="dimension" />
+        <attr name="rf_head_height" format="dimension" />
+        <attr name="rf_max_bottom_height" format="dimension" />
+        <attr name="rf_bottom_height" format="dimension" />
+        <attr name="rf_overscroll_height" format="dimension" />
+        <attr name="rf_enable_refresh" format="boolean" />
+        <attr name="rf_enable_loadmore" format="boolean" />
+        <attr name="rf_pureScrollMode_on" format="boolean" />
+        <attr name="rf_overscroll_top_show" format="boolean" />
+        <attr name="rf_overscroll_bottom_show" format="boolean" />
+        <attr name="rf_enable_overscroll" format="boolean" />
+        <attr name="rf_headerView" format="dimension" />
+        <attr name="rf_bottomView" format="dimension" />
+        <attr name="rf_floatRefresh" format="boolean" />
+        <attr name="rf_autoLoadMore" format="boolean" />
+        <attr name="rf_enable_keepIView" format="boolean" />
+        <attr name="rf_showRefreshingWhenOverScroll" format="boolean" />
+        <attr name="rf_showLoadingWhenOverScroll" format="boolean" />
+    </declare-styleable>
+</resources>
