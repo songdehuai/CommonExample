@@ -8,7 +8,7 @@ import android.provider.MediaStore;
 import android.widget.GridView;
 
 import com.songdehuai.commonlib.R;
-import com.songdehuai.commonlib.base.BaseActivity;
+import com.songdehuai.commonlib.base.CommBaseActivity;
 import com.songdehuai.commonlib.task.AbsTask;
 import com.songdehuai.commonlib.task.Task;
 import com.songdehuai.commonlib.utils.grantor.PermissionListener;
@@ -30,7 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * 多图选择
  */
-public class MultImagePickerActivity extends BaseActivity {
+public class MultImagePickerActivityComm extends CommBaseActivity {
 
     private GridView imageLv;
     private CopyOnWriteArrayList<ImageItem> imageItems = new CopyOnWriteArrayList<>();
@@ -48,7 +48,7 @@ public class MultImagePickerActivity extends BaseActivity {
     public void onPublish() {
         super.onPublish();
         if (multMapAdapter.getSelectImages().size() > 0) {
-            ImagePicker.getInstance().onMultiImageSuccess(multMapAdapter.getSelectImages());
+            ImagePicker.getInstance().onImageSuccess(multMapAdapter.getSelectImages());
         }
         finish();
     }

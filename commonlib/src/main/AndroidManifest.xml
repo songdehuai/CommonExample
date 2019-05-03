@@ -3,7 +3,7 @@
 
     <application>
         <activity android:name=".utils.imagepicker.CameraPickerCalBackActivity" />
-        <activity android:name=".utils.imagepicker.MultImagePickerActivity" />
+        <activity android:name=".utils.imagepicker.MultImagePickerActivityComm" />
         <activity android:name=".utils.grantor.PermissionActivity" />
 
         <provider

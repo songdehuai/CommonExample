@@ -4,11 +4,6 @@ import java.util.Set;
 
 public interface ImagePickerCallBack {
 
-    void onGetImage(String filePath);
+    void onGetImage(Set<ImageItem> imageItemList);
 
-    public interface MultiImagePickerCallBack {
-
-        void onMultiImageSuccess(Set<ImageItem> imageItemList);
-
-    }
 }

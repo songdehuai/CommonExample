@@ -13,7 +13,6 @@ public class ImagePicker {
     private static ImagePicker imagePicker = new ImagePicker();
 
     private static ImagePickerCallBack imagePickerCallBack;
-    private static ImagePickerCallBack.MultiImagePickerCallBack multiMapPickerCallBack;
 
     public static ImagePicker getInstance() {
         return imagePicker;
@@ -38,9 +37,9 @@ public class ImagePicker {
      * @param context
      * @param callBack
      */
-    public void startMultiImagePicker(Context context, ImagePickerCallBack.MultiImagePickerCallBack callBack) {
-        ImagePicker.multiMapPickerCallBack = callBack;
-        Intent intent = new Intent(context, MultImagePickerActivity.class);
+    public void startMultiImagePicker(Context context, ImagePickerCallBack callBack) {
+        ImagePicker.imagePickerCallBack = callBack;
+        Intent intent = new Intent(context, MultImagePickerActivityComm.class);
         context.startActivity(intent);
     }
 
@@ -57,15 +56,10 @@ public class ImagePicker {
         context.startActivity(intent);
     }
 
-    void onMultiImageSuccess(Set<ImageItem> imageItemList) {
-        if (multiMapPickerCallBack != null) {
-            multiMapPickerCallBack.onMultiImageSuccess(imageItemList);
+    void onImageSuccess(Set<ImageItem> imageItemList) {
+        if (imagePickerCallBack != null) {
+            imagePickerCallBack.onGetImage(imageItemList);
         }
     }
 
-    void onSuccess(String filePath) {
-        if (imagePickerCallBack != null) {
-            imagePickerCallBack.onGetImage(filePath);
-        }
-    }
 }

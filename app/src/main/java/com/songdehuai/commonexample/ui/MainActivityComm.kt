@@ -3,24 +3,22 @@ package com.songdehuai.commonexample.ui
 import android.os.Bundle
 import com.songdehuai.commonexample.R
 import com.songdehuai.commonexample.ui.adapter.MainListAdapter
-import com.songdehuai.commonlib.base.BaseActivity
+import com.songdehuai.commonlib.base.CommBaseActivity
 import com.songdehuai.commonlib.utils.FreeSync
 import com.songdehuai.commonlib.utils.imagepicker.ImageItem
 import com.songdehuai.widget.myrefreshlayout.MyRefreshLayout
 import com.songdehuai.widget.myrefreshlayout.RefreshListenerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : BaseActivity() {
+class MainActivityComm : CommBaseActivity() {
 
     lateinit var freeSync: FreeSync
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main, "你好")
+        setContentView(R.layout.activity_main, "你好", "图库")
         initViews()
     }
 
@@ -64,10 +62,17 @@ class MainActivity : BaseActivity() {
 
     override fun onPublish() {
         super.onPublish()
-        showDialog("你好你好")
+        showImagePickerDialog()
+    }
+
+    override fun onGetImage(imageItemList: MutableSet<ImageItem>?) {
+        super.onGetImage(imageItemList)
+        imageItemList?.forEach {
+            log(it.filePath)
+        }
     }
 
     private fun log(str: String) {
-
+        adapter?.addData(str)
     }
 }

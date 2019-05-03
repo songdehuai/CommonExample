@@ -7,8 +7,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.songdehuai.commonlib.R
 import com.songdehuai.commonlib.R.*
-import com.songdehuai.commonlib.R.drawable.bg_title
 import com.songdehuai.commonlib.utils.DialogUtils
 import com.songdehuai.commonlib.utils.imagepicker.ImageItem
 import com.songdehuai.commonlib.utils.imagepicker.ImagePicker
@@ -20,18 +20,19 @@ import kotlinx.android.synthetic.main.base_activity.*
 
 
 /**
- * BaseActivity
+ * CommBaseActivity
  * @author songdehuai
  */
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBack,
-    ImagePickerCallBack.MultiImagePickerCallBack {
+open class CommBaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBack {
 
 
     private lateinit var mContentView: View
     private lateinit var titleDrawable: Drawable
     private lateinit var dialogUtils: DialogUtils
     open lateinit var thisActivity: Activity
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layout.base_activity)
@@ -40,8 +41,8 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
 
     private fun init() {
         thisActivity = this
-        initTitle()
         dialogUtils = DialogUtils(this)
+        initTitle()
     }
 
     /**
@@ -59,16 +60,9 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
     }
 
     /**
-     * 显示图片
+     * 图片选择回调
      */
-    override fun onGetImage(filePath: String?) {
-
-    }
-
-    /**
-     * 多图选择
-     */
-    override fun onMultiImageSuccess(imageItemList: MutableSet<ImageItem>?) {
+    override fun onGetImage(imageItemList: MutableSet<ImageItem>?) {
 
     }
 
@@ -76,7 +70,7 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
      * 初始化Title,默认取Drawable里bg_title
      */
     private fun initTitle() {
-        this.titleDrawable = getDrawable(bg_title)
+        this.titleDrawable = getDrawable(R.drawable.bg_title)
         StatusBar.with(this)
             .statusDark(false)
             .statusDrawable(titleDrawable)
@@ -225,7 +219,7 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBac
      */
     open fun showImagePickerDialog() {
         val items = arrayOf("相册", "相机", "多图")
-        AlertDialog.Builder(this@BaseActivity)
+        AlertDialog.Builder(this@CommBaseActivity)
             .setItems(items) { _, which ->
                 when (which) {
                     0 -> {

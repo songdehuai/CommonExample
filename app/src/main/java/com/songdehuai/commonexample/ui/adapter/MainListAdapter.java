@@ -42,6 +42,10 @@ public class MainListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void addData(String data){
+        this.stringList.add(data);
+        notifyDataSetChanged();
+    }
     @Override
     public int getCount() {
         return stringList.size();
