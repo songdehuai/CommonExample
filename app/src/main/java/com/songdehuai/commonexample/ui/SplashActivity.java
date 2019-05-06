@@ -9,6 +9,7 @@ import com.songdehuai.commonlib.base.BaseActivity;
 
 import org.jetbrains.annotations.Nullable;
 
+
 public class SplashActivity extends BaseActivity {
 
     ImageView splashIv;
@@ -26,6 +27,7 @@ public class SplashActivity extends BaseActivity {
                 finish();
             }
         }, 1000);
+
     }
 
 }

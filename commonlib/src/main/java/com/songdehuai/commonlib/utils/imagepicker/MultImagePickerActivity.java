@@ -32,7 +32,6 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class MultImagePickerActivity extends BaseActivity {
 
-    private GridView imageLv;
     private CopyOnWriteArrayList<ImageItem> imageItems = new CopyOnWriteArrayList<>();
     private RecyclerView imageRv;
     private MultImageReAdapter multMapAdapter;
@@ -55,7 +54,6 @@ public class MultImagePickerActivity extends BaseActivity {
 
     private void initViews() {
         imageRv = findViewById(R.id.image_rv);
-        imageLv = findViewById(R.id.image_lv);
         multMapAdapter = new MultImageReAdapter(thisActivity);
         imageRv.setLayoutManager(new GridLayoutManager(this, 3));
         imageRv.setAdapter(multMapAdapter);

@@ -67,6 +67,7 @@ public class MultImageReAdapter extends RecyclerView.Adapter<MultImageReAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ImageItem imageItem = imageItemList.get(position);
         Glide.with(activity).load(imageItem.getFilePath()).thumbnail(0.1f).into(holder.imageView);
+        holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked(imageItem.isCheck());
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             imageItemList.get(position).setCheck(!imageItem.isCheck());

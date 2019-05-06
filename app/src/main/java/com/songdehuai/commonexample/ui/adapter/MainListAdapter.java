@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.songdehuai.commonexample.R;
+import com.songdehuai.commonexample.ui.Myentity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,28 +16,19 @@ import java.util.List;
 public class MainListAdapter extends BaseAdapter {
 
     private Activity activity;
-    private List<String> stringList;
-    private boolean isPass;
+    private List<Myentity> stringList;
 
     public MainListAdapter(Activity activity) {
         this.activity = activity;
         stringList = new ArrayList<>();
     }
 
-    public boolean isPass() {
-        return isPass;
-    }
-
-    public void setPass(boolean pass) {
-        isPass = pass;
-    }
-
-    public void addList(List<String> list) {
+    public void addList(List<Myentity> list) {
         stringList.addAll(list);
         notifyDataSetChanged();
     }
 
-    public void setList(List<String> strings) {
+    public void setList(List<Myentity> strings) {
         stringList.clear();
         stringList.addAll(strings);
         notifyDataSetChanged();
@@ -48,7 +40,7 @@ public class MainListAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
+    public Myentity getItem(int position) {
         return stringList.get(position);
     }
 
@@ -67,12 +59,12 @@ public class MainListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if (isPass) {
+        if (stringList.get(position).isSelect()) {
             viewHolder.textView.setTextColor(Color.RED);
         } else {
             viewHolder.textView.setTextColor(Color.BLACK);
         }
-        viewHolder.textView.setText(stringList.get(position));
+        viewHolder.textView.setText(stringList.get(position).getStr());
         return convertView;
     }
 

@@ -1,1 +1,1 @@
-include ':app', ':websocket', ":commonLib", ':RefreshLayout'
+include ':app', ":commonLib", ':RefreshLayout'

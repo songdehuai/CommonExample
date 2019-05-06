@@ -40,6 +40,7 @@ dependencies {
     api 'com.squareup.okhttp3:okhttp:3.14.1'
     api "org.jetbrains.anko:anko:0.10.8"
     api 'com.github.bumptech.glide:glide:4.9.0'
+//    implementation 'com.koushikdutta.async:androidasync:2.2.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 }
 buildscript {

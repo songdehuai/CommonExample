@@ -10,7 +10,6 @@ public class ImageItem implements Parcelable {
     private int countSize;
     private boolean isCheck;
 
-
     public ImageItem() {
     }
 
