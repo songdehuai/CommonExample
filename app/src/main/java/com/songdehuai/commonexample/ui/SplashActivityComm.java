@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.songdehuai.commonexample.R;
-import com.songdehuai.commonlib.base.BaseActivity;
+import com.songdehuai.commonlib.base.CommBaseActivity;
 
 import org.jetbrains.annotations.Nullable;
 
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivityComm extends CommBaseActivity {
 
     ImageView splashIv;
 
@@ -22,7 +22,7 @@ public class SplashActivity extends BaseActivity {
         splashIv.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivityComm.class);
                 startActivity(intent);
                 finish();
             }

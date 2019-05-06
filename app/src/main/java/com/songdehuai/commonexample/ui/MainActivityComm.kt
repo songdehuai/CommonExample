@@ -4,7 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.songdehuai.commonexample.R
 import com.songdehuai.commonexample.ui.adapter.KAdapterTest
-import com.songdehuai.commonlib.base.BaseActivity
+import com.songdehuai.commonexample.ui.adapter.MainListAdapter
+import com.songdehuai.commonlib.base.CommBaseActivity
 import com.songdehuai.commonlib.utils.FreeSync
 import com.songdehuai.commonlib.utils.LogUtil
 import com.songdehuai.commonlib.ws.CommSocketClient
@@ -16,13 +17,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : BaseActivity() {
+class MainActivityComm : CommBaseActivity() {
 
     lateinit var freeSync: FreeSync
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main, "你好", "leihou")
+        setContentView(R.layout.activity_main, "你好", "图库")
         initViews()
     }
 
@@ -74,6 +75,8 @@ class MainActivity : BaseActivity() {
 
 
     private fun log(str: String) {
-
+        showImagePickerDialog()
     }
+
+
 }

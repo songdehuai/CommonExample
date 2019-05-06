@@ -14,6 +14,8 @@ import com.songdehuai.commonlib.utils.grantor.PermissionListener;
 import com.songdehuai.commonlib.utils.grantor.PermissionsUtil;
 
 import java.io.File;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
@@ -29,6 +31,7 @@ public class CameraPickerCalBackActivity extends Activity {
     private int CAMERACODE = 908;
     private String imageName;
     private boolean isCamera = false;
+    private Set<ImageItem> imageItemSet;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class CameraPickerCalBackActivity extends Activity {
     }
 
     private void start() {
+        imageItemSet = new LinkedHashSet<>();
         isCamera = getIntent().getBooleanExtra("isCamera", false);
         if (isCamera) {
             PermissionsUtil.requestPermission(CameraPickerCalBackActivity.this, new PermissionListener() {
@@ -80,12 +84,16 @@ public class CameraPickerCalBackActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (RESULT_OK == resultCode) {
             if (requestCode == CAMERACODE) {
-                ImagePicker.getInstance().onSuccess(getExternalCacheDir() + "/" + imageName);
+                ImageItem imageItem = new ImageItem(getExternalCacheDir() + "/" + imageName, imageName);
+                imageItemSet.add(imageItem);
+                ImagePicker.getInstance().onImageSuccess(imageItemSet);
             }
         }
         if (requestCode == IMAGECODE) {
             if (null != data && null != data.getData()) {
-                ImagePicker.getInstance().onSuccess(AppUtils.getRealPathFromURI(this, data.getData()));
+                ImageItem imageItem = new ImageItem(AppUtils.getRealPathFromURI(this, data.getData()));
+                imageItemSet.add(imageItem);
+                ImagePicker.getInstance().onImageSuccess(imageItemSet);
             }
         }
         finish();
