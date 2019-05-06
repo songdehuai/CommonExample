@@ -3,10 +3,9 @@ package com.songdehuai.commonexample.ui
 import android.content.Intent
 import android.os.Bundle
 import com.songdehuai.commonexample.R
-import com.songdehuai.commonexample.ui.adapter.KAdapterTest
+import com.songdehuai.commonexample.ui.adapter.KTAdapterTest
 import com.songdehuai.commonlib.base.CommBaseActivity
 import com.songdehuai.commonlib.utils.FreeSync
-import com.songdehuai.commonlib.utils.LogUtil
 import com.songdehuai.commonlib.ws.CommSocketClient
 import com.songdehuai.commonlib.ws.MessageSender
 import com.songdehuai.commonlib.ws.SocketService
@@ -27,13 +26,14 @@ class MainActivity : CommBaseActivity() {
     }
 
     private fun initViews() {
-        val adapter = KAdapterTest
+        val adapter = KTAdapterTest
         log_lv.adapter = adapter
 
         test_btn.setOnClickListener {
             //CommSocketClient.connect(thisActivity)
             freeSync = FreeSync.defaultFreeSync()
             freeSync.call("test")
+
             val intent = Intent(this, SocketService::class.java)
             startService(intent)
         }

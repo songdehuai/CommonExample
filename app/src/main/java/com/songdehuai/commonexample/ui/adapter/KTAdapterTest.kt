@@ -5,7 +5,8 @@ import com.songdehuai.commonexample.ui.Myentity
 import com.songdehuai.commonlib.utils.kadapter.KTAdapterFactory.KAdapter
 import kotlinx.android.synthetic.main.item_test.view.*
 
-var KAdapterTest = KAdapter<Myentity> {
+var KTAdapterTest = KAdapter<Myentity> {
+
    layout {
        R.layout.item_test
    }
