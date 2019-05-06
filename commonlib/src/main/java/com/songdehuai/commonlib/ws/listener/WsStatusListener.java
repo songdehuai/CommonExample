@@ -1,4 +1,4 @@
-package com.songdehuai.commonlib.wsmanager.listener;
+package com.songdehuai.commonlib.ws.listener;
 
 import okhttp3.Response;
 import okio.ByteString;

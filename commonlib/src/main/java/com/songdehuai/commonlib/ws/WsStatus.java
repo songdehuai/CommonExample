@@ -1,4 +1,4 @@
-package com.songdehuai.commonlib.wsmanager;
+package com.songdehuai.commonlib.ws;
 
 public class WsStatus {
 

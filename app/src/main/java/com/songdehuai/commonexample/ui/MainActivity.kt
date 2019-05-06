@@ -4,20 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import com.songdehuai.commonexample.R
 import com.songdehuai.commonexample.ui.adapter.KAdapterTest
-import com.songdehuai.commonexample.ui.adapter.MainListAdapter
 import com.songdehuai.commonlib.base.CommBaseActivity
 import com.songdehuai.commonlib.utils.FreeSync
 import com.songdehuai.commonlib.utils.LogUtil
 import com.songdehuai.commonlib.ws.CommSocketClient
+import com.songdehuai.commonlib.ws.MessageSender
 import com.songdehuai.commonlib.ws.SocketService
-import com.songdehuai.commonlib.wsmanager.WsManager
 import com.songdehuai.widget.myrefreshlayout.MyRefreshLayout
 import com.songdehuai.widget.myrefreshlayout.RefreshListenerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivityComm : CommBaseActivity() {
+class MainActivity : CommBaseActivity() {
 
     lateinit var freeSync: FreeSync
 
@@ -33,13 +32,22 @@ class MainActivityComm : CommBaseActivity() {
 
         test_btn.setOnClickListener {
             //CommSocketClient.connect(thisActivity)
+            freeSync = FreeSync.defaultFreeSync()
+            freeSync.call("test")
             val intent = Intent(this, SocketService::class.java)
             startService(intent)
         }
         status_tn.setOnClickListener {
-            val temp = UUID.randomUUID().toString();
-            LogUtil.i("发送：$temp")
-            CommSocketClient.sendMsg(temp)
+            //            val temp = UUID.randomUUID().toString();
+//            LogUtil.i("发送：$temp")
+           // CommSocketClient.autoSend("你好")
+
+            CommSocketClient.autoSend(object : MessageSender {
+                override fun message(): String {
+                    return UUID.randomUUID().toString()
+                }
+
+            })
         }
 
         refresh_rl.setOnRefreshListener(object : RefreshListenerAdapter() {

@@ -1,9 +1,8 @@
 package com.songdehuai.commonlib.ws
 
 import android.content.Context
+import android.os.Handler
 import com.songdehuai.commonlib.utils.LogUtil
-import com.songdehuai.commonlib.wsmanager.WsManager
-import com.songdehuai.commonlib.wsmanager.listener.WsStatusListener
 import okhttp3.*
 import java.util.concurrent.TimeUnit
 
@@ -11,8 +10,8 @@ import java.util.concurrent.TimeUnit
 object CommSocketClient {
 
     private lateinit var mWsManager: WsManager
-//    private val url = "ws://echo.websocket.org"
-    private val url = "ws://192.168.2.103:8888/8731b9b18af9ac848203515123a5093cdf20252a40e38edc6917aa13fe1720adff910741c9e799d85c28215f5135d4bc"
+    private val url = "ws://echo.websocket.org"
+    //    private val url = "ws://192.168.2.103:8888/8731b9b18af9ac848203515123a5093cdf20252a40e38edc6917aa13fe1720adff910741c9e799d85c28215f5135d4bc"
 
     fun connect(context: Context) {
         val mOkHttpClient = OkHttpClient.Builder()
@@ -20,8 +19,9 @@ object CommSocketClient {
             .writeTimeout(3, TimeUnit.SECONDS)//设置写的超时时间
             .connectTimeout(10, TimeUnit.SECONDS)//设置连接超时时间
             .build()
+
         mWsManager = WsManager.Builder(context).client(mOkHttpClient).wsUrl(url).build()
-        mWsManager.setWsStatusListener(object : WsStatusListener() {
+        mWsManager.wsStatusListener = object : WsStatusListener() {
             override fun onMessage(text: String?) {
                 super.onMessage(text)
                 LogUtil.i("接收:$text")
@@ -39,6 +39,7 @@ object CommSocketClient {
 
             override fun onFailure(t: Throwable?, response: Response?) {
                 super.onFailure(t, response)
+                t?.printStackTrace()
                 LogUtil.i("错误:${response.toString()}")
             }
 
@@ -46,7 +47,7 @@ object CommSocketClient {
                 super.onReconnect()
                 LogUtil.i("重连")
             }
-        })
+        }
         mWsManager.startConnect()
     }
 
@@ -54,9 +55,52 @@ object CommSocketClient {
         mWsManager.let {
             if (mWsManager.isWsConnected) {
                 it.sendMessage(msg)
+                LogUtil.i("发送$msg")
             }
         }
     }
 
+    fun autoSend(text: String) {
+        mSender = object : MessageSender {
+            override fun message(): String {
+                return text
+            }
+        }
+        if (!isSend) {
+            isSend = true
+            sender()
+        }
+    }
+
+    fun autoSend(sender: MessageSender) {
+        mSender = sender
+        if (!isSend) {
+            isSend = true
+            sender()
+        }
+    }
+
+    fun cancelAutoSend() {
+        isSend = false
+    }
+
+    fun sender() {
+        senderHandler.postDelayed(reconnectRunnable, 5000)
+    }
+
+    private val reconnectRunnable = Runnable {
+        mSender.let {
+            sendMsg(it.message())
+            if (isSend) {
+                sender()
+            }
+        }
+    }
+
+    var isSend = false
+
+    lateinit var mSender: MessageSender
+
+    val senderHandler = Handler()
 
 }

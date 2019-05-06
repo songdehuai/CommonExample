@@ -1,12 +1,8 @@
-package com.songdehuai.commonlib.wsmanager;
+package com.songdehuai.commonlib.ws;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
-
-import com.songdehuai.commonlib.wsmanager.listener.WsStatusListener;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -22,8 +18,12 @@ import okio.ByteString;
 public class WsManager implements IWsManager {
     //重连自增步长
     private final static int RECONNECT_INTERVAL = 10 * 1000;
-    //最大重连间隔
+    //最大重连间隔,只有在设置重连时常自增长的时候才有效
     private final static long RECONNECT_MAX_TIME = 120 * 1000;
+    //默认重连间隔
+    private final static long RECONNECT_TIME = 8000;
+    //是否自增长重连间隔时常，默认false
+    private final static boolean NEED_TIME_INCREASE = false;
     private Context mContext;
     private String wsUrl;
     private WebSocket mWebSocket;
@@ -191,10 +191,6 @@ public class WsManager implements IWsManager {
     }
 
 
-    public void setWsStatusListener(WsStatusListener wsStatusListener) {
-        this.wsStatusListener = wsStatusListener;
-    }
-
     @Override
     public synchronized boolean isWsConnected() {
         return mCurrentStatus == WsStatus.CONNECTED;
@@ -234,7 +230,12 @@ public class WsManager implements IWsManager {
 
         setCurrentStatus(WsStatus.RECONNECT);
 
-        long delay = reconnectCount * RECONNECT_INTERVAL;
+        long delay = RECONNECT_TIME;
+
+        if (NEED_TIME_INCREASE) {
+            delay = reconnectCount * RECONNECT_INTERVAL;
+        }
+
         wsMainHandler
                 .postDelayed(reconnectRunnable, delay > RECONNECT_MAX_TIME ? RECONNECT_MAX_TIME : delay);
         reconnectCount++;
@@ -311,17 +312,30 @@ public class WsManager implements IWsManager {
         return isSend;
     }
 
-    //检查网络是否连接
+    /**
+     * 检测网络状态,无视网络状态,直接调用重连
+     *
+     * @param context
+     * @return
+     */
     private boolean isNetworkConnected(Context context) {
-        if (context != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
-                    .getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
-            if (mNetworkInfo != null) {
-                return mNetworkInfo.isAvailable();
-            }
-        }
-        return false;
+//        if (context != null) {
+//            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+//                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+//            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+//            if (mNetworkInfo != null) {
+//                return mNetworkInfo.isAvailable();
+//            }
+//        }
+        return true;
+    }
+
+    public void setWsStatusListener(WsStatusListener wsStatusListener) {
+        this.wsStatusListener = wsStatusListener;
+    }
+
+    public WsStatusListener getWsStatusListener() {
+        return wsStatusListener;
     }
 
     public static final class Builder {
