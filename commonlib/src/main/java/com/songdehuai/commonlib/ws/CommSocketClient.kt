@@ -11,9 +11,9 @@ object CommSocketClient {
 
     private lateinit var mWsManager: WsManager
     private val url = "ws://echo.websocket.org"
-    //    private val url = "ws://192.168.2.103:8888/8731b9b18af9ac848203515123a5093cdf20252a40e38edc6917aa13fe1720adff910741c9e799d85c28215f5135d4bc"
-
+    
     fun connect(context: Context) {
+
         val mOkHttpClient = OkHttpClient.Builder()
             .readTimeout(3, TimeUnit.SECONDS)//设置读取超时时间
             .writeTimeout(3, TimeUnit.SECONDS)//设置写的超时时间

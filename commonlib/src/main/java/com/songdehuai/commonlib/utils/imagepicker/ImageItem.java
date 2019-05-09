@@ -10,7 +10,7 @@ public class ImageItem implements Parcelable {
     private int countSize;
     private boolean isCheck;
 
-    
+
     public ImageItem() {
     }
 
@@ -19,10 +19,12 @@ public class ImageItem implements Parcelable {
         this.fileName = fileName;
         this.countSize = countSize;
     }
+
     public ImageItem(String filePath, String fileName) {
         this.filePath = filePath;
         this.fileName = fileName;
     }
+
     public ImageItem(String filePath) {
         this.filePath = filePath;
     }

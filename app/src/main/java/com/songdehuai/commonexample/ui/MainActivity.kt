@@ -34,20 +34,18 @@ class MainActivity : CommBaseActivity() {
             freeSync = FreeSync.defaultFreeSync()
             freeSync.call("test")
 
+
             val intent = Intent(this, SocketService::class.java)
             startService(intent)
         }
         status_tn.setOnClickListener {
-            //            val temp = UUID.randomUUID().toString();
-//            LogUtil.i("发送：$temp")
-           // CommSocketClient.autoSend("你好")
-
+            // CommSocketClient.autoSend("你好")
             CommSocketClient.autoSend(object : MessageSender {
                 override fun message(): String {
                     return UUID.randomUUID().toString()
                 }
-
             })
+
         }
 
         refresh_rl.setOnRefreshListener(object : RefreshListenerAdapter() {
@@ -78,7 +76,7 @@ class MainActivity : CommBaseActivity() {
 
     override fun onPublish() {
         super.onPublish()
-
+        showImagePickerDialog()
     }
 
 
