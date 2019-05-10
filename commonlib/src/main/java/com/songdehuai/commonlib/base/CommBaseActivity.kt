@@ -157,7 +157,7 @@ open class CommBaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCal
      *
      * @param toast Toast内容
      */
-    open fun showTaost(toast: String) {
+    open fun showToast(toast: String) {
         Toast.makeText(this, toast, Toast.LENGTH_SHORT).show()
     }
 
