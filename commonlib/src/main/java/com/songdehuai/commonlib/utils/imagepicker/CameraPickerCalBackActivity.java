@@ -86,14 +86,14 @@ public class CameraPickerCalBackActivity extends Activity {
             if (requestCode == CAMERACODE) {
                 ImageItem imageItem = new ImageItem(getExternalCacheDir() + "/" + imageName, imageName);
                 imageItemSet.add(imageItem);
-                ImagePicker.getInstance().onImageSuccess(imageItemSet);
+                ImagePicker.INSTANCE.onImageSuccess(imageItemSet);
             }
         }
         if (requestCode == IMAGECODE) {
             if (null != data && null != data.getData()) {
                 ImageItem imageItem = new ImageItem(AppUtils.getRealPathFromURI(this, data.getData()));
                 imageItemSet.add(imageItem);
-                ImagePicker.getInstance().onImageSuccess(imageItemSet);
+                ImagePicker.INSTANCE.onImageSuccess(imageItemSet);
             }
         }
         finish();

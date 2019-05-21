@@ -16,6 +16,10 @@
         android:layout_height="wrap_content"
         android:text="时间" />
 
+    <ImageView
+        android:id="@+id/test_iv"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
     <EditText
         android:textColor="@color/colorAccent"
         android:id="@+id/log_et"

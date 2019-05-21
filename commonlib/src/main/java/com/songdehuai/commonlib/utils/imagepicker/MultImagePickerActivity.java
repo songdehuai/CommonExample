@@ -5,10 +5,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.widget.GridView;
 
 import com.songdehuai.commonlib.R;
-import com.songdehuai.commonlib.base.CommBaseActivity;
+import com.songdehuai.commonlib.base.BaseActivity;
 import com.songdehuai.commonlib.task.AbsTask;
 import com.songdehuai.commonlib.task.Task;
 import com.songdehuai.commonlib.utils.grantor.PermissionListener;
@@ -30,11 +29,12 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * 多图选择
  */
-public class MultImagePickerActivityComm extends CommBaseActivity {
+public class MultImagePickerActivity extends BaseActivity {
 
     private CopyOnWriteArrayList<ImageItem> imageItems = new CopyOnWriteArrayList<>();
     private RecyclerView imageRv;
     private MultImageReAdapter multMapAdapter;
+    private int max = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,17 +47,24 @@ public class MultImagePickerActivityComm extends CommBaseActivity {
     public void onPublish() {
         super.onPublish();
         if (multMapAdapter.getSelectImages().size() > 0) {
-            ImagePicker.getInstance().onImageSuccess(multMapAdapter.getSelectImages());
+            ImagePicker.INSTANCE.onImageSuccess(multMapAdapter.getSelectImages());
         }
         finish();
     }
 
     private void initViews() {
+        if (getIntent().hasExtra("max")) {
+            max = getIntent().getIntExtra("max", 0);
+        }
         imageRv = findViewById(R.id.image_rv);
         multMapAdapter = new MultImageReAdapter(thisActivity);
+        multMapAdapter.setMax(max);
         imageRv.setLayoutManager(new GridLayoutManager(this, 3));
         imageRv.setAdapter(multMapAdapter);
-        multMapAdapter.setOnSelectImageListener((isChecked, selectImages) -> setTitlePublishText("确定 (" + selectImages.size() + ")"));
+        multMapAdapter.setOnSelectImageListener((isChecked, selectImages) -> {
+                    setTitlePublishText("确定 (" + selectImages.size() + ")");
+                }
+        );
         PermissionsUtil.requestPermission(thisActivity, new PermissionListener() {
             @Override
             public void permissionGranted(@NonNull String[] permission) {
@@ -72,6 +79,9 @@ public class MultImagePickerActivityComm extends CommBaseActivity {
 
     }
 
+    /**
+     * 获取本地图片
+     */
     private void getLocalImages() {
         Task.task().start(new AbsTask<CopyOnWriteArrayList<ImageItem>>() {
             @Override

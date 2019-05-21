@@ -20,11 +20,11 @@ import kotlinx.android.synthetic.main.base_activity.*
 
 
 /**
- * CommBaseActivity
+ * BaseActivity
  * @author songdehuai
  */
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-open class CommBaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCallBack {
+open class BaseActivity : AppCompatActivity(), TitleCallBack {
 
 
     private lateinit var mContentView: View
@@ -59,12 +59,6 @@ open class CommBaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCal
         finish()
     }
 
-    /**
-     * 图片选择回调
-     */
-    override fun onGetImage(imageItemList: MutableSet<ImageItem>?) {
-
-    }
 
     /**
      * 初始化Title,默认取Drawable里bg_title
@@ -191,48 +185,6 @@ open class CommBaseActivity : AppCompatActivity(), TitleCallBack, ImagePickerCal
      */
     open fun dismissDialog() {
         dialogUtils.dismissDialog()
-    }
-
-    /**
-     * 启动图片选择器
-     */
-    open fun startImagePicker() {
-        ImagePicker.getInstance().startImagePicker(this, this)
-    }
-
-    /**
-     * 启动相机拍照
-     */
-    open fun startCamera() {
-        ImagePicker.getInstance().startCameraPicker(this, this)
-    }
-
-    /**
-     * 启动多图选择
-     */
-    open fun startMultiImagePicker() {
-        ImagePicker.getInstance().startMultiImagePicker(this, this)
-    }
-
-    /**
-     * 显示图片选择器，图片和相机
-     */
-    open fun showImagePickerDialog() {
-        val items = arrayOf("相册", "相机", "多图")
-        AlertDialog.Builder(this@CommBaseActivity)
-            .setItems(items) { _, which ->
-                when (which) {
-                    0 -> {
-                        startImagePicker()
-                    }
-                    1 -> {
-                        startCamera()
-                    }
-                    2 -> {
-                        startMultiImagePicker()
-                    }
-                }
-            }.show()
     }
 
 

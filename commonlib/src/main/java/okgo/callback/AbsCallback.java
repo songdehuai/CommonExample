@@ -40,6 +40,11 @@ public abstract class AbsCallback<T> implements Callback<T> {
     }
 
     @Override
+    public void onSuccess(Response<T> response) {
+
+    }
+
+    @Override
     public void onError(Response<T> response) {
         OkLogger.printStackTrace(response.getException());
     }

@@ -59,13 +59,13 @@
         <activity android:name=".ui.MainActivity">
 
         </activity>
-        <activity android:name=".ui.TestActivityComm" />
+        <activity android:name=".ui.TestActivity" />
         <activity android:name=".ui.account.LoginActivity" />
         <activity
             android:name=".ui.dialog.DialogActivity"
             android:theme="@style/dialogActivity" />
         <activity
-            android:name=".ui.SplashActivityComm"
+            android:name=".ui.SplashActivity"
             android:theme="@style/splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.songdehuai.commonlib.R;
@@ -31,6 +32,11 @@ public class MultImageReAdapter extends RecyclerView.Adapter<MultImageReAdapter.
     private Activity activity;
     private CopyOnWriteArrayList<ImageItem> imageItemList;
     private OnSelectImageListener onSelectImageListener;
+    private int max = 0;
+
+    public void setMax(int max) {
+        this.max = max;
+    }
 
     public MultImageReAdapter(Activity activity) {
         this.activity = activity;
@@ -70,16 +76,26 @@ public class MultImageReAdapter extends RecyclerView.Adapter<MultImageReAdapter.
         holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked(imageItem.isCheck());
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            imageItemList.get(position).setCheck(!imageItem.isCheck());
-            if (isChecked) {
-                selectImages.add(imageItem);
-            } else {
-                selectImages.remove(imageItem);
+            if (max != 0 && selectImages.size() == max) {
+                Toast.makeText(activity, "只能选择" + max + "张图", Toast.LENGTH_SHORT).show();
+                holder.checkBox.setChecked(false);
+                return;
             }
-            if (onSelectImageListener != null) {
-                onSelectImageListener.onSelect(isChecked, selectImages);
-            }
+            select(isChecked, imageItem, position);
         });
+    }
+
+
+    private void select(boolean isChecked, ImageItem imageItem, int position) {
+        imageItemList.get(position).setCheck(!imageItem.isCheck());
+        if (isChecked) {
+            selectImages.add(imageItem);
+        } else {
+            selectImages.remove(imageItem);
+        }
+        if (onSelectImageListener != null) {
+            onSelectImageListener.onSelect(isChecked, selectImages);
+        }
     }
 
     @Override

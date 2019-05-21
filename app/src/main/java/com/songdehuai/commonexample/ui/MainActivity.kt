@@ -1,22 +1,13 @@
 package com.songdehuai.commonexample.ui
 
-import android.content.Intent
 import android.os.Bundle
 import com.songdehuai.commonexample.R
-import com.songdehuai.commonexample.ui.adapter.KTAdapterTest
-import com.songdehuai.commonlib.base.CommBaseActivity
-import com.songdehuai.commonlib.utils.FreeSync
-import com.songdehuai.commonlib.utils.imagepicker.ImageItem
-import com.songdehuai.commonlib.ws.CommSocketClient
-import com.songdehuai.commonlib.ws.MessageSender
-import com.songdehuai.commonlib.ws.SocketService
-import com.songdehuai.widget.myrefreshlayout.MyRefreshLayout
-import com.songdehuai.widget.myrefreshlayout.RefreshListenerAdapter
+import com.songdehuai.commonlib.base.BaseActivity
+import com.songdehuai.commonlib.utils.imagepicker.ImagePicker
+import com.songdehuai.commonlib.utils.imagepicker.ImagePickerCallBack
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import kotlin.collections.ArrayList
 
-class MainActivity : CommBaseActivity() {
+class MainActivity : BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,23 +22,19 @@ class MainActivity : CommBaseActivity() {
         }
         status_tn.setOnClickListener {
 
-
         }
 
-    }
-
-    override fun onGetImage(imageItemList: MutableSet<ImageItem>?) {
-        super.onGetImage(imageItemList)
-        imageItemList?.forEach {
-            log(it.filePath)
-        }
     }
 
     override fun onPublish() {
         super.onPublish()
-        showImagePickerDialog()
-    }
 
+        ImagePicker.startMultiImagePicker(this, 0, ImagePickerCallBack {
+            it?.forEach {
+                log(it.filePath)
+            }
+        })
+    }
 
     private fun log(str: String) {
         log_et.append(str)

@@ -2,16 +2,16 @@ package com.songdehuai.commonlib.base
 
 
 /**
- * BaseSync
+ * IDataView
  */
-interface BaseSync {
+interface IDataView {
 
     /**
      * 显示Toast
      *
      * @param toast Toast内容
      */
-    fun showTaost(toast: String)
+    fun showToast(toast: String)
 
     /**
      * 显示LoadDialog
@@ -37,18 +37,5 @@ interface BaseSync {
      */
     fun dismissDialog()
 
-    /**
-     * 启动图片选择器
-     */
-    fun startImagePicker()
 
-    /**
-     * 启动相机拍照
-     */
-    fun startCamera()
-
-    /**
-     * 显示图片选择器，图片和相机
-     */
-    fun showImagePickerDialog()
 }

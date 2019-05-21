@@ -2,6 +2,7 @@ package com.songdehuai.commonlib.base
 
 
 import com.alibaba.fastjson.JSONObject
+import com.songdehuai.commonlib.net.Result
 import com.songdehuai.commonlib.net.ResultCallBack
 
 import java.util.LinkedHashMap

@@ -9,7 +9,7 @@ var KTAdapterTest = KAdapter<String> {
    layout {
        R.layout.item_test
    }
-    bindData { type, vh, data ->
+    bindData { _, vh, data ->
         vh.itemView.item_tv.text = data
     }
 }
