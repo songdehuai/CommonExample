@@ -6,6 +6,7 @@ import com.songdehuai.commonexample.R
 import com.songdehuai.commonexample.ui.adapter.KTAdapterTest
 import com.songdehuai.commonlib.base.CommBaseActivity
 import com.songdehuai.commonlib.utils.FreeSync
+import com.songdehuai.commonlib.utils.imagepicker.ImageItem
 import com.songdehuai.commonlib.ws.CommSocketClient
 import com.songdehuai.commonlib.ws.MessageSender
 import com.songdehuai.commonlib.ws.SocketService
@@ -17,7 +18,6 @@ import kotlin.collections.ArrayList
 
 class MainActivity : CommBaseActivity() {
 
-    lateinit var freeSync: FreeSync
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,52 +26,21 @@ class MainActivity : CommBaseActivity() {
     }
 
     private fun initViews() {
-        val adapter = KTAdapterTest
-        log_lv.adapter = adapter
-
         test_btn.setOnClickListener {
-            //CommSocketClient.connect(thisActivity)
-            freeSync = FreeSync.defaultFreeSync()
-            freeSync.call("test")
 
-
-            val intent = Intent(this, SocketService::class.java)
-            startService(intent)
         }
         status_tn.setOnClickListener {
-            // CommSocketClient.autoSend("你好")
-            CommSocketClient.autoSend(object : MessageSender {
-                override fun message(): String {
-                    return UUID.randomUUID().toString()
-                }
-            })
+
 
         }
-
-        refresh_rl.setOnRefreshListener(object : RefreshListenerAdapter() {
-            override fun onRefresh(refreshLayout: MyRefreshLayout?) {
-                super.onRefresh(refreshLayout)
-                adapter.data { getNewData() }
-                refresh_rl.finish()
-            }
-
-            override fun onLoadMore(refreshLayout: MyRefreshLayout?) {
-                super.onLoadMore(refreshLayout)
-                adapter.addDatas(getNewData())
-                refresh_rl.finish()
-            }
-        })
-        refresh_rl.startRefresh()
-
 
     }
 
-    fun getNewData(): ArrayList<Myentity> {
-        val list = ArrayList<Myentity>()
-        for (i in 1..10) {
-            list.add(Myentity(UUID.randomUUID().toString(), false))
+    override fun onGetImage(imageItemList: MutableSet<ImageItem>?) {
+        super.onGetImage(imageItemList)
+        imageItemList?.forEach {
+            log(it.filePath)
         }
-        return list
     }
 
     override fun onPublish() {
@@ -81,7 +50,7 @@ class MainActivity : CommBaseActivity() {
 
 
     private fun log(str: String) {
-        showImagePickerDialog()
+        log_et.append(str)
     }
 
 
