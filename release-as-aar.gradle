@@ -1,0 +1,73 @@
+uploadArchives() {
+    repositories {
+        mavenDeployer {
+
+            configuration = configurations.deployerJars
+
+            println 'repoType : ' + rootProject.ext.repoType
+
+            if ((rootProject.ext.repoType).equals("remote")) { //发布到远程仓库
+                snapshotRepository(url: snapshotRepositoryUrl) { // 测试包
+
+                    //从本地文件读取仓库账号和密码
+                    def File propFile = new File('../mavenAccount.properties')
+                    if (propFile.canRead()) {
+                        def Properties props = new Properties()
+                        props.load(new FileInputStream(propFile))
+
+                        if (props != null && props.containsKey('repositoryUserName') && props.containsKey('repositoryPassword')) {
+                            def repositoryUserName = props['repositoryUserName']
+                            def repositoryPassword = props['repositoryPassword']
+                            authentication(userName: repositoryUserName, password: repositoryPassword)
+
+                            println '上传到远程仓库'
+                        } else {
+                            println '没有发布权限'
+                        }
+                    } else {
+                        println '没有发布权限'
+                    }
+                }
+
+                repository(url: releaseRepositoryUrl) { // 正式包
+                    def File propFile = new File('../mavenAccount.properties')
+                    if (propFile.canRead()) {
+                        def Properties props = new Properties()
+                        props.load(new FileInputStream(propFile))
+
+                        if (props != null && props.containsKey('repositoryUserName') && props.containsKey('repositoryPassword')) {
+                            def repositoryUserName = props['repositoryUserName']
+                            def repositoryPassword = props['repositoryPassword']
+                            authentication(userName: repositoryUserName, password: repositoryPassword)
+
+                            println '上传到远程仓库'
+                        } else {
+                            println '没有发布权限'
+                        }
+                    } else {
+                        println '没有发布权限'
+                    }
+                }
+            } else { // 发布到本地仓库
+                def localRepositoryUrl
+                def File propFile = new File('../mavenAccount.properties')
+                if (propFile.canRead()) {
+                    def Properties props = new Properties()
+                    props.load(new FileInputStream(propFile))
+
+                    if (props != null && props.containsKey('localRepositoryUrl')) {
+                        localRepositoryUrl = props['localRepositoryUrl']
+                        snapshotRepository(url: localRepositoryUrl)
+                        repository(url: localRepositoryUrl)
+
+                        println '上传到本地仓库'
+                    } else {
+                        println '没有发布权限'
+                    }
+                } else {
+                    println '没有发布权限'
+                }
+            }
+        }
+    }
+}

@@ -16,13 +16,29 @@ buildscript {
 }
 
 allprojects {
+
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+
+    configurations {
+        deployerJars
+    }
     repositories {
         google()
         jcenter()
-        
     }
+
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'//不使用缓存，使用仓库中最新的包
+}
+
+subprojects {  //表示除主工程外所有子模块
+
+}
+
+ext { //仓库选择标记
+    repoType = "remote" //发布到远程仓库（下文中会用到）
+//    repoType = "local" //发布到本地仓库，方便调试，避免调试期间频繁上传到maven仓库（下文中会用到）
 }
