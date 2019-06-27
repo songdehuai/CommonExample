@@ -1,18 +1,4 @@
-/*
- * Copyright 2016 jeasonlzy(廖子尧)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 package okgo.model;
 
 import android.os.Build;
@@ -38,7 +24,7 @@ import okgo.utils.OkLogger;
 
 /**
  * ================================================
- * 作    者：jeasonlzy（廖子尧）Github地址：https://github.com/jeasonlzy
+ * 作    者：
  * 版    本：1.0
  * 创建日期：2015/10/10
  * 描    述：请求头的包装类
@@ -47,7 +33,7 @@ import okgo.utils.OkLogger;
  */
 public class HttpHeaders implements Serializable {
     private static final long serialVersionUID = 8458647755751403873L;
-    private static final String driverInfo = HttpUtils.getDeviceInfo();
+    private static final String driverInfo = HttpUtils.INSTANCE.getDeviceInfo();
     public static final String FORMAT_HTTP_DATA = "EEE, dd MMM y HH:mm:ss 'GMT'";
     public static final TimeZone GMT_TIME_ZONE = TimeZone.getTimeZone("GMT");
 
@@ -134,7 +120,7 @@ public class HttpHeaders implements Serializable {
                 jsonObject.put(entry.getKey(), entry.getValue());
             }
         } catch (JSONException e) {
-            OkLogger.printStackTrace(e);
+            OkLogger.INSTANCE.printStackTrace(e);
         }
         return jsonObject.toString();
     }
@@ -209,7 +195,7 @@ public class HttpHeaders implements Serializable {
                 Class<?> sysResCls = Class.forName("com.android.internal.R$string");
                 Field webUserAgentField = sysResCls.getDeclaredField("web_user_agent");
                 Integer resId = (Integer) webUserAgentField.get(null);
-                webUserAgent = OkGo.getInstance().getContext().getString(resId);
+                webUserAgent = OkGo.Companion.getInstance().getContext().getString(resId);
             } catch (Exception e) {
                 // We have nothing to do
             }

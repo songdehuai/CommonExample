@@ -7,7 +7,7 @@ open class BasePresenterImpl<V : BaseView> : BasePresenter<V> {
 
     override fun cancelAllTask() {
         //取消所有请求
-        OkGo.getInstance().cancelAll()
+        OkGo.instance.cancelAll()
     }
 
     protected var mView: V? = null
