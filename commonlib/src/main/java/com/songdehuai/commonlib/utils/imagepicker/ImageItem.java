@@ -82,7 +82,7 @@ public class ImageItem implements Parcelable {
         this.isCheck = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<ImageItem> CREATOR = new Parcelable.Creator<ImageItem>() {
+    public static final Creator<ImageItem> CREATOR = new Creator<ImageItem>() {
         @Override
         public ImageItem createFromParcel(Parcel source) {
             return new ImageItem(source);

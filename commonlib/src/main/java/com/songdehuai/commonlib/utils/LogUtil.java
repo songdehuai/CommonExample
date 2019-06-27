@@ -31,7 +31,7 @@ import com.songdehuai.commonlib.BuildConfig;
  */
 public class LogUtil {
 
-    public static String customTagPrefix = "x_log";
+    public static String customTagPrefix = "c_log";
 
     private LogUtil() {
     }

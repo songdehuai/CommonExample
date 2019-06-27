@@ -29,11 +29,11 @@ public class WsManager implements IWsManager {
     private WebSocket mWebSocket;
     private OkHttpClient mOkHttpClient;
     private Request mRequest;
-    //websocket连接状态
+    //webSocket连接状态
     private int mCurrentStatus = WsStatus.DISCONNECTED;
     //是否需要断线自动重连
     private boolean isNeedReconnect;
-    //是否为手动关闭websocket连接
+    //是否为手动关闭webSocket连接
     private boolean isManualClose = false;
     private WsStatusListener wsStatusListener;
     private Lock mLock;

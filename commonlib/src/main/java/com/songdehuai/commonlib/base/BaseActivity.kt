@@ -1,48 +1,52 @@
 package com.songdehuai.commonlib.base
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.songdehuai.commonlib.R
-import com.songdehuai.commonlib.R.*
 import com.songdehuai.commonlib.utils.DialogUtils
-import com.songdehuai.commonlib.utils.imagepicker.ImageItem
-import com.songdehuai.commonlib.utils.imagepicker.ImagePicker
-import com.songdehuai.commonlib.utils.imagepicker.ImagePickerCallBack
-import com.songdehuai.commonlib.utils.ultimatebar.StatusBar
+import com.songdehuai.commonlib.utils.ultimatebar.ultimateBarBuilder
 import com.songdehuai.commonlib.widget.title.TitleCallBack
 import com.songdehuai.commonlib.widget.title.TitleType
-import kotlinx.android.synthetic.main.base_activity.*
+import com.songdehuai.commonlib.widget.title.TitleView
 
 
 /**
- * BaseActivity
+ * MVPBaseActivity
  * @author songdehuai
  */
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 open class BaseActivity : AppCompatActivity(), TitleCallBack {
 
-
     private lateinit var mContentView: View
+    private var titleView: TitleView? = null
     private lateinit var titleDrawable: Drawable
     private lateinit var dialogUtils: DialogUtils
     open lateinit var thisActivity: Activity
 
+    private val rootView by lazy { initRootView() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layout.base_activity)
+        setContentView(rootView)
         init()
     }
 
     private fun init() {
         thisActivity = this
         dialogUtils = DialogUtils(this)
-        initTitle()
+    }
+
+    private fun initRootView(): LinearLayout {
+        val linearLayout = LinearLayout(this)
+        linearLayout.orientation = LinearLayout.VERTICAL
+        return linearLayout
     }
 
     /**
@@ -59,13 +63,13 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack {
         finish()
     }
 
-
     /**
      * 初始化Title,默认取Drawable里bg_title
      */
     private fun initTitle() {
-        this.titleDrawable = getDrawable(R.drawable.bg_title)
-        StatusBar.with(this)
+        titleView = TitleView(this)
+        this.titleDrawable = ContextCompat.getDrawable(this, R.drawable.bg_title)!!
+        ultimateBarBuilder()
             .statusDark(false)
             .statusDrawable(titleDrawable)
             .statusDrawable2(titleDrawable)
@@ -77,8 +81,50 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack {
             .drawableBar()
     }
 
+    /**
+     * 同时设置状态栏和标题栏Drawable
+     */
+    open fun setTitleBack(drawable: Drawable) {
+        this.titleDrawable = drawable
+        ultimateBarBuilder()
+            .statusDark(false)
+            .statusDrawable(titleDrawable)
+            .statusDrawable2(titleDrawable)
+            .applyNavigation(false)
+            .navigationDark(false)
+            .navigationDrawable(titleDrawable)
+            .navigationDrawable2(titleDrawable)
+            .create()
+            .drawableBar()
+    }
 
-    /********************************************开放方法区域********************************************/
+    /**
+     * 同时设置状态栏和标题栏Drawable
+     */
+    open fun setTitleBack(resId: Int) {
+        setTitleBack(ContextCompat.getDrawable(this, resId)!!)
+    }
+
+    /**
+     * 设置暗色状态栏
+     */
+    open fun setStatusDark(boolean: Boolean) {
+        ultimateBarBuilder()
+            .statusDark(boolean)
+            .create()
+            .drawableBar()
+    }
+
+    /**
+     * 设置ContentView
+     * @param layoutResID 布局id
+     */
+    override fun setContentView(layoutResID: Int) {
+        super.setContentView(layoutResID)
+        mContentView = View.inflate(this, layoutResID, null)
+        rootView.removeAllViews()
+        rootView.addView(mContentView)
+    }
 
     /**
      * 设置ContentView，带标题和返回按钮
@@ -86,11 +132,13 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack {
      * @param title 标题
      */
     open fun setContentView(layoutId: Int, title: CharSequence) {
-        titleView.setTitleText(title)
-        titleView.setTitleCallBack(TitleType.DETAIL, this)
+        initTitle()
+        titleView?.setTitleText(title)
+        titleView?.setTitleCallBack(TitleType.DETAIL, this)
         mContentView = View.inflate(this, layoutId, null)
-        content_fl.removeAllViews()
-        content_fl.addView(mContentView)
+        rootView.removeAllViews()
+        rootView.addView(titleView)
+        rootView.addView(mContentView)
     }
 
     /**
@@ -99,11 +147,29 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack {
      * @param title 标题
      */
     open fun setContentViewNone(layoutId: Int, title: CharSequence) {
-        titleView.setTitleText(title)
-        titleView.setTitleCallBack(TitleType.NONE, this)
+        initTitle()
+        titleView?.setTitleText(title)
+        titleView?.setTitleCallBack(TitleType.NONE, this)
         mContentView = View.inflate(this, layoutId, null)
-        content_fl.removeAllViews()
-        content_fl.addView(mContentView)
+        rootView.removeAllViews()
+        rootView.addView(titleView)
+        rootView.addView(mContentView)
+    }
+
+    /**
+     * 设置ContentView，仅带右边文字
+     * @param layoutId 布局id
+     * @param title 标题
+     */
+    open fun setContentViewPublish(layoutId: Int, title: CharSequence, publishStr: CharSequence) {
+        initTitle()
+        titleView?.setTitleText(title)
+        titleView?.setTitleCallBack(TitleType.PUBLISH_ONE, this)
+        titleView?.setPublishText(publishStr)
+        mContentView = View.inflate(this, layoutId, null)
+        rootView.removeAllViews()
+        rootView.addView(titleView)
+        rootView.addView(mContentView)
     }
 
     /**
@@ -113,12 +179,14 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack {
      * @param publishStr 右边文字
      */
     open fun setContentView(layoutId: Int, title: CharSequence, publishStr: CharSequence) {
-        titleView.setTitleCallBack(TitleType.PUBLISH, this)
-        titleView.setTitleText(title)
-        titleView.setPublishText(publishStr)
+        initTitle()
+        titleView?.setTitleCallBack(TitleType.PUBLISH, this)
+        titleView?.setTitleText(title)
+        titleView?.setPublishText(publishStr)
         mContentView = View.inflate(this, layoutId, null)
-        content_fl.removeAllViews()
-        content_fl.addView(mContentView)
+        rootView.removeAllViews()
+        rootView.addView(titleView)
+        rootView.addView(mContentView)
     }
 
 
@@ -129,22 +197,6 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack {
         titleView?.setPublishText(text)
     }
 
-    /**
-     * 同时设置状态栏和标题栏Drawable
-     */
-    open fun setTitleBack(drawable: Drawable) {
-        this.titleDrawable = drawable
-        StatusBar.with(this)
-            .statusDark(false)
-            .statusDrawable(titleDrawable)
-            .statusDrawable2(titleDrawable)
-            .applyNavigation(false)
-            .navigationDark(false)
-            .navigationDrawable(titleDrawable)
-            .navigationDrawable2(titleDrawable)
-            .create()
-            .drawableBar()
-    }
 
     /**
      * 显示Toast
@@ -187,5 +239,15 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack {
         dialogUtils.dismissDialog()
     }
 
+    /**
+     * 显示dialog
+     */
+    open fun showDialog(title: String, listener: DialogInterface.OnClickListener) {
+        AlertDialog.Builder(thisActivity)
+            .setMessage(title)
+            .setPositiveButton("确定", listener).setNegativeButton(
+                "取消", { dialog, which -> dialog.dismiss() })
+            .show()
+    }
 
 }

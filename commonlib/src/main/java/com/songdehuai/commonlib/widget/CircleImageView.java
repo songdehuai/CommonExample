@@ -1,4 +1,4 @@
-package com.songdehuai.commlib.widget;
+package com.songdehuai.commonlib.widget;
 
 
 import android.annotation.SuppressLint;

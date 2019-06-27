@@ -31,4 +31,11 @@
     <color name="order_red">#ee4744</color>
     <color name="test">#ee4744</color>
     <color name="alpha20">#66050505</color>
+
+
+    <color name="Orange">#e75946</color>
+    <color name="Yellow">#f4d227</color>
+    <color name="Blue">#4674e7</color>
+    <color name="Green">#0ba62c</color>
+    <color name="xxx">#FC4F07</color>
 </resources>

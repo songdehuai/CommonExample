@@ -9,7 +9,8 @@ object KTAdapterFactory {
         return resultAdapter
     }
 
-    inline fun <reified T> KAdapter(layoutId: Int, body: BaseKTAdapter<T>.() -> Unit
+    inline fun <reified T> KAdapter(
+        layoutId: Int, body: BaseKTAdapter<T>.() -> Unit
     ): BaseKTAdapter<T> {
         val adapter = object : BaseKTAdapter<T>() {}
         var resultAdapter = adapter as BaseKTAdapter<T>

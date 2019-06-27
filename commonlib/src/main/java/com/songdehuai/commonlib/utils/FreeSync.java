@@ -51,7 +51,7 @@ public class FreeSync {
         }
     }
 
-    public synchronized void addCallOnly(String name, FreeSyncCallback freeSyncCallback) {
+    public synchronized void addOneCallOnly(String name, FreeSyncCallback freeSyncCallback) {
         for (String s : freeSyncCallbackHashMap.keySet()) {
             if (name.equals(s)) {
                 freeSyncCallbackHashMap.remove(s);
@@ -60,7 +60,6 @@ public class FreeSync {
         CopyOnWriteArrayList<FreeSyncCallback> callBackList = new CopyOnWriteArrayList<>();
         callBackList.add(freeSyncCallback);
         freeSyncCallbackHashMap.put(name, callBackList);
-
     }
 
 
@@ -71,18 +70,6 @@ public class FreeSync {
                 callBackList = freeSyncCallbackHashMap.get(s);
                 for (int i = 0; i < callBackList.size(); i++) {
                     callBackList.get(i).onCallBack(name, obj);
-                }
-            }
-        }
-    }
-
-    public synchronized void fastCall(String name) {
-        CopyOnWriteArrayList<FreeSyncCallback> callBackList;
-        for (String s : freeSyncCallbackHashMap.keySet()) {
-            if (name.equals(s)) {
-                callBackList = freeSyncCallbackHashMap.get(s);
-                for (int i = 0; i < callBackList.size(); i++) {
-                    callBackList.get(i).onCallBack(name, "");
                 }
             }
         }

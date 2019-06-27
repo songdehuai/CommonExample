@@ -1,1 +1,1 @@
-include ':app', ":commonLib", ':RefreshLayout'
+include ':app', ':commonlib'

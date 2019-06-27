@@ -62,7 +62,6 @@ public interface TaskController {
      * @param task
      * @param <T>
      * @return
-     * @throws Throwable
      */
     <T> T startSync(AbsTask<T> task) throws Throwable;
 

@@ -1,12 +1,8 @@
 package com.songdehuai.commonlib.base
 
-
-import com.alibaba.fastjson.JSONObject
-import com.songdehuai.commonlib.net.Result
+import com.google.gson.Gson
 import com.songdehuai.commonlib.net.ResultCallBack
-
 import java.util.LinkedHashMap
-
 import okgo.OkGo
 import okgo.model.HttpParams
 
@@ -38,7 +34,7 @@ open class BaseParams : HttpParams() {
      */
     fun toJson(): String {
         put(this)
-        return JSONObject.toJSONString(this)
+        return Gson().toJson(this)
     }
 
     /**

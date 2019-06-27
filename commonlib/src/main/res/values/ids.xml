@@ -2,4 +2,5 @@
 <resources>
     <item name="cacheBitmapKey" type="id" />
     <item name="cacheBitmapDirtyKey" type="id" />
+    <item name="ex_header" type="id"/>
 </resources>

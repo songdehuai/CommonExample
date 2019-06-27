@@ -1,6 +1,7 @@
 package com.songdehuai.commonlib.net;
 
-import com.alibaba.fastjson.JSONObject;
+
+import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
 
@@ -8,7 +9,7 @@ public class Result<T> {
 
     private String code;
     private String message;
-    private T data;
+    private T result;
 
 
     public String getCode() {
@@ -28,16 +29,16 @@ public class Result<T> {
     }
 
     public T getData() {
-        return data;
+        return result;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setData(T result) {
+        this.result = result;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return JSONObject.toJSONString(this);
+        return new Gson().toJson(this);
     }
 }

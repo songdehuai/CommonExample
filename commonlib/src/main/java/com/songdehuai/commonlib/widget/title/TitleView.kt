@@ -86,9 +86,14 @@ class TitleView : RelativeLayout {
                 rightRl?.visibility = View.VISIBLE
                 finishLi?.visibility = View.VISIBLE
             }
+            TitleType.PUBLISH_ONE -> {
+                rightRl?.visibility = View.VISIBLE
+                finishLi?.visibility = View.GONE
+            }
         }
 
     }
+
     fun setTitleText(titleText: CharSequence) {
         titleTv?.text = titleText
     }

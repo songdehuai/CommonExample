@@ -49,6 +49,7 @@ class StatusBar private constructor(private val activity: Activity) {
         )
     }
 
+
     // 沉浸
     fun immersionBar() {
         StatusBarUtils.setBarImmersion(
@@ -100,6 +101,7 @@ class StatusBar private constructor(private val activity: Activity) {
             this.statusDark = statusDark
             return this
         }
+
 
         fun statusDrawable(statusDrawable: Drawable?): Builder {
             this.statusDrawable = statusDrawable
