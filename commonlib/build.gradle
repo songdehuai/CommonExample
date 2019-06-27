@@ -12,7 +12,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.2"
     }
 
     buildTypes {
@@ -39,17 +39,17 @@ dependencies {
     api 'com.google.android.material:material:1.0.0'
     api 'com.squareup.okhttp3:okhttp:3.14.1'
     api 'com.github.bumptech.glide:glide:4.9.0'
-    api 'com.tencent:mmkv:1.0.19'
+    api 'com.tencent:mmkv:1.0.22'
     api 'org.apache.commons:commons-lang3:3.9'
     api 'com.google.code.gson:gson:2.8.5'
 }
 
-group repositoryGroup
-//version '0.0.1'
-version '0.0.1-SNAPSHOT' //表示测试版，正式发版时去掉“-SNAPSHOT”
-
-//打成aar格式
-apply from: '../release-as-aar.gradle' //引用上传插件
-
-//打成jar格式
-//apply from: '../release-as-jar.gradle'
+//group repositoryGroup
+////version '0.0.1'
+//version '0.0.1-SNAPSHOT' //表示测试版，正式发版时去掉“-SNAPSHOT”
+//
+////打成aar格式
+//apply from: '../release-as-aar.gradle' //引用上传插件
+//
+////打成jar格式
+////apply from: '../release-as-jar.gradle'
