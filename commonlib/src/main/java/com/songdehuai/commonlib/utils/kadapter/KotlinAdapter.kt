@@ -11,7 +11,7 @@ import java.lang.ref.WeakReference
 import kotlin.collections.ArrayList
 
 
-abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>() {
+abstract class KotlinAdapter<T> : RecyclerView.Adapter<KotlinAdapter.ViewHolder>() {
 
     /**
      * 添加单个布局
@@ -187,11 +187,11 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
     /**
      * 判断此类型布局是否被拦截
      */
-    fun isIntercept(viewType: Int): Boolean {
-        return interceptViews.containsKey(viewType)
+    fun isIntercept(itemViewType: Int): Boolean {
+        return interceptViews.containsKey(itemViewType)
     }
 
-    fun bindData(bind: (viewType: Int, holder: ViewHolder, data: T) -> Unit) {
+    fun bindData(bind: (type: Int, holder: ViewHolder, data: T) -> Unit) {
         mBind = bind
     }
 
@@ -217,12 +217,12 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
         layoutInflater = inflater()
     }
 
-    fun inflater(inflater: LayoutInflater, withInflater: BaseKTAdapter<T>.() -> Unit) {
+    fun inflater(inflater: LayoutInflater, withInflater: KotlinAdapter<T>.() -> Unit) {
         layoutInflater = inflater
         withInflater()
     }
 
-    fun inflater(context: Context, withContext: BaseKTAdapter<T>.() -> Unit) {
+    fun inflater(context: Context, withContext: KotlinAdapter<T>.() -> Unit) {
         layoutInflater = LayoutInflater.from(context)
         withContext()
     }
@@ -286,7 +286,7 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
     private var mOnItemClickListener: ((position: Int, view: View) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, type: Int): ViewHolder {
-        Log.i("BaseKTAdapter", "onBindViewHolder=" + type)
+        Log.i("KotlinAdapter", "onBindViewHolder=" + type)
         val inflater = LayoutInflater.from(parent.context)
 
         when (type) {
