@@ -1,4 +1,18 @@
-
+/*
+ * Copyright 2016 jeasonlzy(廖子尧)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package okgo.request.base;
 
 import android.text.TextUtils;
@@ -21,7 +35,7 @@ import okhttp3.RequestBody;
 
 /**
  * ================================================
- * 作    者：
+ * 作    者：jeasonlzy（廖子尧）Github地址：https://github.com/jeasonlzy
  * 版    本：1.0
  * 创建日期：16/8/9
  * 描    述：
@@ -61,35 +75,35 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
     @SuppressWarnings("unchecked")
     @Override
     public R params(String key, File file) {
-        params.put(key, file);
+        getParams().put(key, file);
         return (R) this;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public R addFileParams(String key, List<File> files) {
-        params.putFileParams(key, files);
+        getParams().putFileParams(key, files);
         return (R) this;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public R addFileWrapperParams(String key, List<HttpParams.FileWrapper> fileWrappers) {
-        params.putFileWrapperParams(key, fileWrappers);
+        getParams().putFileWrapperParams(key, fileWrappers);
         return (R) this;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public R params(String key, File file, String fileName) {
-        params.put(key, file, fileName);
+        getParams().put(key, file, fileName);
         return (R) this;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public R params(String key, File file, String fileName, MediaType contentType) {
-        params.put(key, file, fileName, contentType);
+        getParams().put(key, file, fileName, contentType);
         return (R) this;
     }
 
@@ -100,7 +114,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upString(String string) {
@@ -121,7 +137,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upJson(String json) {
@@ -130,7 +148,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upJson(JSONObject jsonObject) {
@@ -139,7 +159,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upJson(JSONArray jsonArray) {
@@ -148,7 +170,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upBytes(byte[] bs) {
@@ -157,7 +181,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upBytes(byte[] bs, MediaType mediaType) {
@@ -166,16 +192,20 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upFile(File file) {
         this.file = file;
-        this.mediaType = HttpUtils.INSTANCE.guessMimeType(file.getName());
+        this.mediaType = HttpUtils.guessMimeType(file.getName());
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upFile(File file, MediaType mediaType) {
@@ -186,23 +216,27 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
 
     @Override
     public RequestBody generateRequestBody() {
-        if (isSpliceUrl) url = HttpUtils.INSTANCE.createUrlFromParams(baseUrl, params.urlParamsMap);
-
-        if (requestBody != null) return requestBody;                                                //自定义的请求体
-        if (content != null && mediaType != null) return RequestBody.create(mediaType, content);    //上传字符串数据
-        if (bs != null && mediaType != null) return RequestBody.create(mediaType, bs);              //上传字节数组
-        if (file != null && mediaType != null) return RequestBody.create(mediaType, file);          //上传一个文件
-        return HttpUtils.INSTANCE.generateMultipartRequestBody(params, isMultipart);
+        if (isSpliceUrl)
+            setUrl(HttpUtils.createUrlFromParams(getBaseUrl(), getParams().urlParamsMap));
+        if (requestBody != null)
+            return requestBody;                                                //自定义的请求体
+        if (content != null && mediaType != null)
+            return RequestBody.create(mediaType, content);    //上传字符串数据
+        if (bs != null && mediaType != null)
+            return RequestBody.create(mediaType, bs);              //上传字节数组
+        if (file != null && mediaType != null)
+            return RequestBody.create(mediaType, file);          //上传一个文件
+        return HttpUtils.generateMultipartRequestBody(getParams(), isMultipart);
     }
 
     protected okhttp3.Request.Builder generateRequestBuilder(RequestBody requestBody) {
         try {
             headers(HttpHeaders.HEAD_KEY_CONTENT_LENGTH, String.valueOf(requestBody.contentLength()));
         } catch (IOException e) {
-            OkLogger.INSTANCE.printStackTrace(e);
+            OkLogger.printStackTrace(e);
         }
         okhttp3.Request.Builder requestBuilder = new okhttp3.Request.Builder();
-        return HttpUtils.INSTANCE.appendHeaders(requestBuilder, headers);
+        return HttpUtils.appendHeaders(requestBuilder, getHeaders());
     }
 
     private void writeObject(ObjectOutputStream out) throws IOException {

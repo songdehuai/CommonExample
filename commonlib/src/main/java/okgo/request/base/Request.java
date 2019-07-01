@@ -1,4 +1,18 @@
-
+/*
+ * Copyright 2016 jeasonlzy(廖子尧)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package okgo.request.base;
 
 import android.text.TextUtils;
@@ -28,7 +42,7 @@ import okhttp3.Response;
 
 /**
  * ================================================
- * 作    者：
+ * 作    者：jeasonlzy（廖子尧）Github地址：https://github.com/jeasonlzy
  * 版    本：1.0
  * 创建日期：2016/1/12
  * 描    述：所有请求的基类，其中泛型 R 主要用于属性设置方法后，返回对应的子类型，以便于实现链式调用
@@ -76,6 +90,7 @@ public abstract class Request<T, R extends Request> implements Serializable {
         cacheTime = go.getCacheTime();
     }
 
+
     @SuppressWarnings("unchecked")
     public R tag(Object tag) {
         this.tag = tag;
@@ -91,7 +106,7 @@ public abstract class Request<T, R extends Request> implements Serializable {
 
     @SuppressWarnings("unchecked")
     public R client(OkHttpClient client) {
-        HttpUtils.INSTANCE.checkNotNull(client, "OkHttpClient == null");
+        HttpUtils.checkNotNull(client, "OkHttpClient == null");
 
         this.client = client;
         return (R) this;
@@ -99,7 +114,7 @@ public abstract class Request<T, R extends Request> implements Serializable {
 
     @SuppressWarnings("unchecked")
     public R call(Call<T> call) {
-        HttpUtils.INSTANCE.checkNotNull(call, "call == null");
+        HttpUtils.checkNotNull(call, "call == null");
 
         this.call = call;
         return (R) this;
@@ -107,7 +122,7 @@ public abstract class Request<T, R extends Request> implements Serializable {
 
     @SuppressWarnings("unchecked")
     public R converter(Converter<T> converter) {
-        HttpUtils.INSTANCE.checkNotNull(converter, "converter == null");
+        HttpUtils.checkNotNull(converter, "converter == null");
 
         this.converter = converter;
         return (R) this;
@@ -121,7 +136,7 @@ public abstract class Request<T, R extends Request> implements Serializable {
 
     @SuppressWarnings("unchecked")
     public R cachePolicy(CachePolicy<T> cachePolicy) {
-        HttpUtils.INSTANCE.checkNotNull(cachePolicy, "cachePolicy == null");
+        HttpUtils.checkNotNull(cachePolicy, "cachePolicy == null");
 
         this.cachePolicy = cachePolicy;
         return (R) this;
@@ -129,7 +144,7 @@ public abstract class Request<T, R extends Request> implements Serializable {
 
     @SuppressWarnings("unchecked")
     public R cacheKey(String cacheKey) {
-        HttpUtils.INSTANCE.checkNotNull(cacheKey, "cacheKey == null");
+        HttpUtils.checkNotNull(cacheKey, "cacheKey == null");
 
         this.cacheKey = cacheKey;
         return (R) this;
@@ -140,7 +155,7 @@ public abstract class Request<T, R extends Request> implements Serializable {
      */
     @SuppressWarnings("unchecked")
     public R cacheTime(long cacheTime) {
-        if (cacheTime <= -1) cacheTime = CacheEntity.Companion.getCACHE_NEVER_EXPIRE();
+        if (cacheTime <= -1) cacheTime = CacheEntity.CACHE_NEVER_EXPIRE;
         this.cacheTime = cacheTime;
         return (R) this;
     }
@@ -273,6 +288,10 @@ public abstract class Request<T, R extends Request> implements Serializable {
         return headers;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -316,7 +335,7 @@ public abstract class Request<T, R extends Request> implements Serializable {
     public Converter<T> getConverter() {
         // converter 优先级高于 callback
         if (converter == null) converter = callback;
-        HttpUtils.INSTANCE.checkNotNull(converter, "converter == null, do you forget to call Request#converter(Converter<T>) ?");
+        HttpUtils.checkNotNull(converter, "converter == null, do you forget to call Request#converter(Converter<T>) ?");
         return converter;
     }
 
@@ -393,7 +412,7 @@ public abstract class Request<T, R extends Request> implements Serializable {
      * 非阻塞方法，异步请求，但是回调在子线程中执行
      */
     public void execute(Callback<T> callback) {
-        HttpUtils.INSTANCE.checkNotNull(callback, "callback == null");
+        HttpUtils.checkNotNull(callback, "callback == null");
 
         this.callback = callback;
         Call<T> call = adapt();

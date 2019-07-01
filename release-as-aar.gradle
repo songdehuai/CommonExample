@@ -6,9 +6,9 @@ uploadArchives() {
 
             println 'repoType : ' + rootProject.ext.repoType
 
-            if ((rootProject.ext.repoType).equals("remote")) { //发布到远程仓库
+            if ((rootProject.ext.repoType).equals("remote")) {
+                //发布到远程仓库
                 snapshotRepository(url: snapshotRepositoryUrl) { // 测试包
-
                     //从本地文件读取仓库账号和密码
                     def File propFile = new File('../mavenAccount.properties')
                     if (propFile.canRead()) {

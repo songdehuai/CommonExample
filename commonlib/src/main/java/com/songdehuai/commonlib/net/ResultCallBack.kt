@@ -12,7 +12,7 @@ abstract class ResultCallBack<T> : AbsCallback<T>() {
         var data: T? = null
         val rootType = javaClass.genericSuperclass
         val type = (rootType as ParameterizedType).actualTypeArguments[0]
-        response.body()?.run {
+        response.body?.run {
             data = Gson().fromJson(string(), type)
         }
         return data

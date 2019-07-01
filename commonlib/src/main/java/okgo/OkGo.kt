@@ -1,6 +1,7 @@
 package okgo
 
 import android.app.Application
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 
@@ -26,12 +27,9 @@ import okgo.utils.HttpUtils
 import okhttp3.OkHttpClient
 
 /**
- * ================================================
  * 作    者：songdehuai
  * 版    本：1.0
- * 创建日期：2019/6/27
- * 描    述：网络请求的入口类
- * ================================================
+ * 创建日期：2019/7/1
  */
 class OkGo private constructor() {
 
@@ -64,9 +62,9 @@ class OkGo private constructor() {
         loggingInterceptor.setColorLevel(Level.INFO)
         builder.addInterceptor(loggingInterceptor)
 
-        builder.readTimeout(DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
-        builder.writeTimeout(DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
-        builder.connectTimeout(DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
+        builder.readTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
+        builder.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
+        builder.connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
 
         val sslParams = HttpsUtils.getSslSocketFactory()
         builder.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
@@ -75,7 +73,7 @@ class OkGo private constructor() {
     }
 
     private object OkGoHolder {
-        internal val holder = OkGo()
+        val holder = OkGo()
     }
 
     /** 必须在全局Application先调用，获取context上下文，否则缓存无法使用  */
@@ -162,16 +160,14 @@ class OkGo private constructor() {
     fun cancelTag(tag: Any?) {
         if (tag == null) return
         getOkHttpClient()?.run {
-            dispatcher.queuedCalls().forEach { call ->
-                if (tag == call.request().tag()) {
-                    call.cancel()
+            dispatcher.queuedCalls().forEach {
+                if (tag == it.request().tag()) {
+                    it.cancel()
                 }
             }
-        }
-        getOkHttpClient()?.run {
-            dispatcher.runningCalls().forEach { call ->
-                if (tag == call.request().tag()) {
-                    call.cancel()
+            dispatcher.runningCalls().forEach {
+                if (tag == it.request().tag()) {
+                    it.cancel()
                 }
             }
         }
@@ -183,8 +179,6 @@ class OkGo private constructor() {
             dispatcher.queuedCalls().forEach {
                 it.cancel()
             }
-        }
-        getOkHttpClient()?.run {
             dispatcher.runningCalls().forEach {
                 it.cancel()
             }
