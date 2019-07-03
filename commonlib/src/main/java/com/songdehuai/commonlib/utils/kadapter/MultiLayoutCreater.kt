@@ -10,8 +10,8 @@ class MultiLayoutCreater {
      * 添加单个布局，以layoutId为type
      */
     fun layout(layoutId: () -> Int) {
-        var id = layoutId()
-        var type = id
+        val id = layoutId()
+        val type = id
         layoutMaps.put(type,id)
     }
 

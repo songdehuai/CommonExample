@@ -4,7 +4,7 @@ object KTAdapterFactory {
 
     fun <T> KAdapter(body: BaseKTAdapter<T>.() -> Unit): BaseKTAdapter<T> {
         val adapter = object : BaseKTAdapter<T>() {}
-        var resultAdapter = adapter as BaseKTAdapter<T>
+        val resultAdapter = adapter as BaseKTAdapter<T>
         resultAdapter.body()
         return resultAdapter
     }
@@ -13,7 +13,7 @@ object KTAdapterFactory {
         layoutId: Int, body: BaseKTAdapter<T>.() -> Unit
     ): BaseKTAdapter<T> {
         val adapter = object : BaseKTAdapter<T>() {}
-        var resultAdapter = adapter as BaseKTAdapter<T>
+        val resultAdapter = adapter as BaseKTAdapter<T>
         resultAdapter.layout { layoutId }
         resultAdapter.body()
         return resultAdapter

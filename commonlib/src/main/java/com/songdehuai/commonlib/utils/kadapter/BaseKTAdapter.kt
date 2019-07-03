@@ -18,7 +18,7 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
      */
     fun layout(layoutId: () -> Int) {
         mLayout = layoutId()
-        mLayoutIds.put(mLayout, mLayout)
+        mLayoutIds[mLayout] = mLayout
     }
 
     /**
@@ -26,11 +26,10 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
      */
     fun multiLayout(layoutIds: ArrayList<Int>) {
         layoutIds.forEach {
-            mLayoutIds.put(it, it)
+            mLayoutIds[it] = it
         }
-
-        if (mLayoutIds.size > 0) {
-            var firstKey = mLayoutIds.keys.first()
+        if (mLayoutIds.isNotEmpty()) {
+            val firstKey = mLayoutIds.keys.first()
             mLayout = mLayoutIds[firstKey]!!
         }
 
@@ -42,8 +41,8 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
     fun multiLayout(initLayout: MultiLayoutCreater.() -> Unit) {
         val creator = MultiLayoutCreater()
         creator.initLayout()
-        var firstKey = creator.getValue().keys.first()
-        mLayout = creator.getValue().get(firstKey)!!
+        val firstKey = creator.getValue().keys.first()
+        mLayout = creator.getValue()[firstKey]!!
         mLayoutIds = creator.getValue()
     }
 
@@ -59,7 +58,7 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
         clear()
         defalutRulesFuntion = initData
         mOriginData = datas
-        var creator = MultiDataCreater<T>()
+        val creator = MultiDataCreater<T>()
         datas.forEach {
             creator.initData(it)
         }
@@ -74,6 +73,7 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
             }
             mTypes.add(it.type!!)
         }
+        notifyDataSetChanged()
     }
 
     /**
@@ -81,13 +81,13 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
      */
     fun data(datas: () -> ArrayList<*>) {
         clear()
-        var tempdatas = datas() as ArrayList<T?>
+        val tempdatas = datas() as ArrayList<T?>
         mOriginData = tempdatas
         tempdatas.forEach {
             mDatas.add(Item(data = it, type = mLayout))
             mTypes.add(mLayout)
         }
-
+        notifyDataSetChanged()
     }
 
     /**
@@ -99,6 +99,7 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
             mDatas.add(Item(data = data, type = mLayout))
             mTypes.add(mLayout)
         }
+        notifyDataSetChanged()
     }
 
     /**
@@ -107,6 +108,7 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
     fun addData(type: Int, data: T) {
         mDatas.add(Item(data = data, type = type))
         mTypes.add(type)
+        notifyDataSetChanged()
     }
 
     /**
@@ -115,6 +117,7 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
     fun addData(index: Int, type: Int, data: T) {
         mDatas.add(index, Item(data = data, type = type))
         mTypes.add(index, type)
+        notifyDataSetChanged()
     }
 
     /**
@@ -125,6 +128,7 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
             mDatas.add(index, Item(type = type, backupData = backupData))
             mTypes.add(index, type)
         }
+        notifyDataSetChanged()
     }
 
     /**
@@ -132,7 +136,7 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
      */
     fun addDatas(datas: List<T>) {
         if (isMultiLayoutMode()) {
-            var creator = MultiDataCreater<T>()
+            val creator = MultiDataCreater<T>()
             if (defalutRulesFuntion != null) {
                 datas.forEach {
                     defalutRulesFuntion!!.invoke(creator, it)
@@ -150,13 +154,14 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
                 mTypes.add(mLayout)
             }
         }
+        notifyDataSetChanged()
     }
 
     /***
      * mutilType新增数据
      */
     fun addDatas(datas: ArrayList<T>, initData: MultiDataCreater<T>.(T) -> Unit) {
-        var creator = MultiDataCreater<T>()
+        val creator = MultiDataCreater<T>()
         datas.forEach {
             creator.initData(it)
         }
@@ -171,6 +176,7 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
             }
             mTypes.add(it.type!!)
         }
+        notifyDataSetChanged()
     }
 
 

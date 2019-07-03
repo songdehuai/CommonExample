@@ -47,6 +47,7 @@
         </attr>
     </declare-styleable>
 
+
     <declare-styleable name="StarView">
         <attr name="selectedDrawable" format="reference" />
         <attr name="unSelectedDrawable" format="reference" />
@@ -54,6 +55,13 @@
         <attr name="value" format="integer" />
         <attr name="clickEnable" format="boolean" />
     </declare-styleable>
+
+
+    <declare-styleable name="PassView">
+        <attr name="showRes" format="color|reference" />
+        <attr name="hideRes" format="color|reference" />
+    </declare-styleable>
+
 
     <!-- 圆形ImageView -->
     <declare-styleable name="CircleImageView">

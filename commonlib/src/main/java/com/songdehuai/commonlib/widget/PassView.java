@@ -2,6 +2,8 @@ package com.songdehuai.commonlib.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.widget.EditText;
@@ -20,21 +22,46 @@ public class PassView extends ImageView {
 
     private boolean isShow = false;
     private EditText editText;
-    private boolean isDark = false;
+    private Drawable showRes;
+    private Drawable hideRes;
 
     public PassView(Context context) {
-        super(context);
-        initViews();
+        super(context, null);
+        setWillNotDraw(false);
     }
 
     public PassView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        initViews();
+        this(context, attrs, 0);
+        setWillNotDraw(false);
     }
 
     public PassView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setWillNotDraw(false);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PassView);
+        showRes = ta.getDrawable(R.styleable.PassView_showRes);
+        hideRes = ta.getDrawable(R.styleable.PassView_hideRes);
+        ta.recycle();
         initViews();
+    }
+
+    private void initViews() {
+        setImageDrawable(hideRes);
+        setOnClickListener(v -> {
+            if (isShow) {
+                setImageDrawable(hideRes);
+                isShow = false;
+                if (editText != null) {
+                    editText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
+                }
+            } else {
+                setImageDrawable(showRes);
+                isShow = true;
+                if (editText != null) {
+                    editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                }
+            }
+        });
     }
 
     public boolean isShow() {
@@ -45,55 +72,12 @@ public class PassView extends ImageView {
         isShow = show;
     }
 
-    public boolean isDark() {
-        return isDark;
-    }
-
-    public void setDark(boolean dark) {
-        isDark = dark;
-        if (isDark) {
-            setImageResource(R.drawable.ic_pass_close9);
-        } else {
-            setImageResource(R.drawable.ic_pass_close);
-        }
-    }
-
     public EditText getEditText() {
         return editText;
     }
 
     public void setEditText(EditText editText) {
         this.editText = editText;
-    }
-
-    private void initViews() {
-        if (isDark) {
-            setImageResource(R.drawable.ic_pass_close9);
-        } else {
-            setImageResource(R.drawable.ic_pass_close);
-        }
-        setOnClickListener(v -> {
-            if (editText != null) {
-                if (isShow) {
-                    if (isDark) {
-                        setImageResource(R.drawable.ic_pass_close9);
-                    } else {
-                        setImageResource(R.drawable.ic_pass_close);
-                    }
-                    isShow = false;
-                    editText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
-                } else {
-                    if (isDark) {
-                        setImageResource(R.drawable.ic_pass_open9);
-                    } else {
-                        setImageResource(R.drawable.ic_pass_open);
-                    }
-
-                    isShow = true;
-                    editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                }
-            }
-        });
     }
 
 }
