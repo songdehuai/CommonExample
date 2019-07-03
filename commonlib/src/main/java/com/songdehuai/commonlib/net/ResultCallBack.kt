@@ -4,10 +4,11 @@ import com.google.gson.Gson
 import java.lang.reflect.ParameterizedType
 
 import okgo.callback.AbsCallback
+import okgo.request.base.Request
 import okhttp3.Response
 
 abstract class ResultCallBack<T> : AbsCallback<T>() {
-    
+
     override fun convertResponse(response: Response): T? {
         var data: T? = null
         val rootType = javaClass.genericSuperclass
@@ -17,5 +18,6 @@ abstract class ResultCallBack<T> : AbsCallback<T>() {
         }
         return data
     }
+
 
 }
