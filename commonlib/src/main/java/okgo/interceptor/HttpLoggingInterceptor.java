@@ -163,8 +163,7 @@ public class HttpLoggingInterceptor implements Interceptor {
                     log("\t" + headers.name(i) + ": " + headers.value(i));
                 }
                 log(" ");
-                // TODO: 2019-07-01   HttpHeaders.hasBody() 方法已经被删除，替代为HttpHeaders.promisesBody()
-                if (logBody && HttpHeaders.promisesBody(clone)) {
+                if (logBody && HttpHeaders.hasBody(clone)) {
                     if (responseBody == null) return response;
 
                     if (isPlaintext(responseBody.contentType())) {
