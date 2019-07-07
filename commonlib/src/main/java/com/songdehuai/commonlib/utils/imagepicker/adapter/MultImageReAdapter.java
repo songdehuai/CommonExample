@@ -48,13 +48,13 @@ public class MultImageReAdapter extends RecyclerView.Adapter<MultImageReAdapter.
         notifyDataSetChanged();
     }
 
-    Set<ImageItem> selectImages = new LinkedHashSet<>();
+    LinkedHashSet<ImageItem> selectImages = new LinkedHashSet<>();
 
     public int getSelectImageCount() {
         return selectImages.size();
     }
 
-    public Set<ImageItem> getSelectImages() {
+    public LinkedHashSet<ImageItem> getSelectImages() {
         return selectImages;
     }
 

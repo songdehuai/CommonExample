@@ -14,6 +14,7 @@ import com.songdehuai.commonlib.utils.grantor.PermissionListener;
 import com.songdehuai.commonlib.utils.grantor.PermissionsUtil;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -31,7 +32,7 @@ public class CameraPickerCalBackActivity extends Activity {
     private int CAMERACODE = 908;
     private String imageName;
     private boolean isCamera = false;
-    private Set<ImageItem> imageItemSet;
+    private ArrayList<ImageItem> imageItemSet;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class CameraPickerCalBackActivity extends Activity {
     }
 
     private void start() {
-        imageItemSet = new LinkedHashSet<>();
+        imageItemSet = new ArrayList<>();
         isCamera = getIntent().getBooleanExtra("isCamera", false);
         if (isCamera) {
             PermissionsUtil.requestPermission(CameraPickerCalBackActivity.this, new PermissionListener() {
@@ -80,6 +81,13 @@ public class CameraPickerCalBackActivity extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        //去掉动画
+        overridePendingTransition(0, 0);
+        super.onPause();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (RESULT_OK == resultCode) {
@@ -96,6 +104,8 @@ public class CameraPickerCalBackActivity extends Activity {
                 ImagePicker.INSTANCE.onImageSuccess(imageItemSet);
             }
         }
+        //无动画关闭
         finish();
+        overridePendingTransition(0, 0);
     }
 }

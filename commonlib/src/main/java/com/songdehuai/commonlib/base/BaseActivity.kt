@@ -25,7 +25,7 @@ import com.songdehuai.commonlib.widget.title.TitleView
 open class BaseActivity : AppCompatActivity(), TitleCallBack {
 
     private lateinit var mContentView: View
-    private var titleView: TitleView? = null
+    open var titleView: TitleView? = null
     private lateinit var titleDrawable: Drawable
     private lateinit var dialogUtils: DialogUtils
     open lateinit var thisActivity: Activity
@@ -187,14 +187,6 @@ open class BaseActivity : AppCompatActivity(), TitleCallBack {
         rootView.removeAllViews()
         rootView.addView(titleView)
         rootView.addView(mContentView)
-    }
-
-
-    /**
-     * 设置TitleView右侧按钮点击文字
-     */
-    open fun setTitlePublishText(text: CharSequence) {
-        titleView?.setPublishText(text)
     }
 
 

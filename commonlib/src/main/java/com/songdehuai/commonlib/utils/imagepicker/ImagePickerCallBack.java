@@ -1,9 +1,9 @@
 package com.songdehuai.commonlib.utils.imagepicker;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 public interface ImagePickerCallBack {
 
-    void onGetImage(Set<ImageItem> imageItemList);
+    void onGetImage(ArrayList<ImageItem> imageItemList);
 
 }

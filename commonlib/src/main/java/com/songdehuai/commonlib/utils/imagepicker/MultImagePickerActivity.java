@@ -47,7 +47,7 @@ public class MultImagePickerActivity extends BaseActivity {
     public void onPublish() {
         super.onPublish();
         if (multMapAdapter.getSelectImages().size() > 0) {
-            ImagePicker.INSTANCE.onImageSuccess(multMapAdapter.getSelectImages());
+            ImagePicker.INSTANCE.onImageSuccess(new ArrayList<>(multMapAdapter.getSelectImages()));
         }
         finish();
     }
@@ -62,7 +62,7 @@ public class MultImagePickerActivity extends BaseActivity {
         imageRv.setLayoutManager(new GridLayoutManager(this, 3));
         imageRv.setAdapter(multMapAdapter);
         multMapAdapter.setOnSelectImageListener((isChecked, selectImages) -> {
-                    setTitlePublishText("确定 (" + selectImages.size() + ")");
+                    getTitleView().setPublishText("确定 (" + selectImages.size() + ")");
                 }
         );
         PermissionsUtil.requestPermission(thisActivity, new PermissionListener() {

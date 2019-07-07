@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 
 import androidx.appcompat.app.AlertDialog
+import java.util.ArrayList
+import java.util.LinkedHashSet
 
 /**
  * 系统原生图片选择器
@@ -20,12 +22,11 @@ object ImagePicker {
      * @param callBack
      */
     fun showImagePickerDialog(activity: Activity, callBack: ImagePickerCallBack) {
-        val items = arrayOf("相册", "相机", "多图")
+        val items = arrayOf("相册", "相机")
         AlertDialog.Builder(activity).setItems(items) { _, which ->
             when (which) {
                 0 -> startImagePicker(activity, callBack)
                 1 -> startCameraPicker(activity, callBack)
-                2 -> startMultiImagePicker(activity, 0, callBack)
             }
         }.show()
     }
@@ -70,7 +71,7 @@ object ImagePicker {
         context.startActivity(intent)
     }
 
-    fun onImageSuccess(imageItemList: Set<ImageItem>) {
+    fun onImageSuccess(imageItemList: ArrayList<ImageItem>) {
         if (imagePickerCallBack != null) {
             imagePickerCallBack!!.onGetImage(imageItemList)
         }

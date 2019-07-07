@@ -12,6 +12,10 @@ public class Result<T> {
     private T result;
 
 
+    public boolean isSuccess() {
+        return "200".equals(code);
+    }
+
     public String getCode() {
         return code;
     }

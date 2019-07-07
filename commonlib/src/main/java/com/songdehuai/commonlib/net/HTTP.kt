@@ -12,7 +12,7 @@ object HTTP {
     }
 
     class POST<T> {
-
+        
         lateinit var mResultDSLCallBack: ResultDSLCallBack<T>
 
         fun execute(resultDSLCallBack: ResultDSLCallBack<T>.() -> Unit) {

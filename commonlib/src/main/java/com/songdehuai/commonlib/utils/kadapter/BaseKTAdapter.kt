@@ -51,6 +51,14 @@ abstract class BaseKTAdapter<T> : RecyclerView.Adapter<BaseKTAdapter.ViewHolder>
     //存储第一次设置的规则
     private var defalutRulesFuntion: (MultiDataCreater<T>.(T) -> Unit)? = null
 
+
+    /**
+     * 清空数据
+     */
+    fun clearData() {
+        mDatas.clear()
+    }
+
     /**
      * mutilType 适配数据
      */

@@ -11,6 +11,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 
 import com.songdehuai.commonlib.R
+import com.songdehuai.commonlib.expansion.GONE
+import com.songdehuai.commonlib.expansion.VISIBLE
 
 import com.songdehuai.commonlib.widget.title.TitleType.NONE
 
@@ -20,15 +22,16 @@ import com.songdehuai.commonlib.widget.title.TitleType.NONE
 class TitleView : RelativeLayout {
 
     private var titleType = NONE
-    private var finishTv: TextView? = null
-    private var finishIv: ImageView? = null
-    private var titleTv: TextView? = null
-    private var finishLi: LinearLayout? = null
-    private var rightTv: TextView? = null
-    private var rightIv: ImageView? = null
-    private var rightRl: RelativeLayout? = null
+    private var view: View? = null
+    private val finishTv by lazy { findViewById<TextView>(R.id.title_finish_tv) }
+    private val finishIv by lazy { findViewById<ImageView>(R.id.title_finish_iv) }
+    private val titleTv by lazy { findViewById<TextView>(R.id.base_title_tv) }
+    private val finishLi by lazy { findViewById<LinearLayout>(R.id.title_finish_li) }
+    private val rightTv by lazy { findViewById<TextView>(R.id.title_right_tv) }
+    private val rightIv by lazy { findViewById<ImageView>(R.id.title_right_iv) }
+    private val rightRl by lazy { findViewById<RelativeLayout>(R.id.title_right_rl) }
     private var titleCallBack: TitleCallBack? = null
-    private var titleRootView: RelativeLayout? = null
+    private val titleRootView by lazy { findViewById<RelativeLayout>(R.id.base_title_root) }
 
     constructor(context: Context) : super(context) {
         initView()
@@ -47,16 +50,7 @@ class TitleView : RelativeLayout {
     }
 
     private fun initView() {
-        LayoutInflater.from(context).inflate(R.layout.base_title, this)
-        titleRootView = findViewById(R.id.base_title_root)
-        finishTv = findViewById(R.id.title_finish_tv)
-        finishIv = findViewById(R.id.title_finish_iv)
-        finishLi = findViewById(R.id.title_finish_li)
-        titleTv = findViewById(R.id.base_title_tv)
-        rightTv = findViewById(R.id.title_right_tv)
-        rightRl = findViewById(R.id.title_right_rl)
-        rightIv = findViewById(R.id.title_right_iv)
-
+        view = LayoutInflater.from(context).inflate(R.layout.base_title, this)
         rightRl?.setOnClickListener {
             if (titleCallBack != null) {
                 titleCallBack!!.onPublish()
@@ -75,20 +69,20 @@ class TitleView : RelativeLayout {
         this.titleCallBack = titleCallBack
         when (titleType) {
             TitleType.NONE -> {
-                rightRl?.visibility = View.GONE
-                finishLi?.visibility = View.GONE
+                rightRl?.GONE()
+                finishLi?.GONE()
             }
             TitleType.DETAIL -> {
-                rightRl?.visibility = View.GONE
-                finishLi?.visibility = View.VISIBLE
+                rightRl?.GONE()
+                finishLi?.VISIBLE()
             }
             TitleType.PUBLISH -> {
-                rightRl?.visibility = View.VISIBLE
-                finishLi?.visibility = View.VISIBLE
+                rightRl?.VISIBLE()
+                finishLi?.VISIBLE()
             }
             TitleType.PUBLISH_ONE -> {
-                rightRl?.visibility = View.VISIBLE
-                finishLi?.visibility = View.GONE
+                rightRl?.VISIBLE()
+                finishLi?.GONE()
             }
         }
 
@@ -98,10 +92,31 @@ class TitleView : RelativeLayout {
         titleTv?.text = titleText
     }
 
+    /**
+     * 设置TitleView右侧按钮点击文字
+     */
     fun setPublishText(text: CharSequence) {
-        rightTv?.visibility = View.VISIBLE
         rightTv?.text = text
+        rightTv?.VISIBLE()
+        rightRl?.VISIBLE()
     }
 
+    fun showPublishText() {
+        rightTv?.VISIBLE()
+        rightRl?.VISIBLE()
+    }
+
+    fun hidePublishText() {
+        rightTv?.GONE()
+    }
+
+    fun showLeft() {
+        finishLi?.VISIBLE()
+        finishIv?.VISIBLE()
+    }
+
+    fun hideLeft() {
+        finishIv?.GONE()
+    }
 
 }

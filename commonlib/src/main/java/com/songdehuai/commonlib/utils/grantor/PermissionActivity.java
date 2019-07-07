@@ -24,7 +24,6 @@ import androidx.core.app.ActivityCompat;
  */
 public class PermissionActivity extends AppCompatActivity {
 
-
     private static final int PERMISSION_REQUEST_CODE = 64;
     private boolean isRequireCheck;
 
