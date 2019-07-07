@@ -1,38 +1,30 @@
 package com.songdehuai.commonlib.net
 
-import com.google.gson.Gson
 import com.songdehuai.commonlib.expansion.logE
 import okgo.OkGo
 import okgo.callback.AbsCallback
-import okgo.callback.StringCallback
 import okgo.model.Response
-import okgo.request.PostRequest
 import okgo.request.base.Request
 import java.lang.reflect.ParameterizedType
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import okhttp3.OkHttpClient
 
 
 object HTTP {
 
     fun <T> post(url: String, resultCallBack: ResultCallBack<T>.() -> Unit) {
-        OkGo.post<T>(url).execute(ResultCallBack<T>().also { resultCallBack })
+        OkGo.post<T>(url).execute(ResultCallBack<T>().also(resultCallBack))
     }
 
-    fun <T> test(url: String, resultCallBack: ResultCallBack<T>.() -> Unit) {
-
+    fun <T> test(url: String, resultCallBack: ResultCallBack<T>) {
+        OkGo.post<T>(url).execute(resultCallBack)
     }
 
     open class ResultCallBack<T> : AbsCallback<T>() {
 
         override fun convertResponse(response: okhttp3.Response): T? {
-            var data: T? = null
-            val rootType = javaClass.genericSuperclass
-            val type = (rootType as ParameterizedType).actualTypeArguments[0]
-            response.body()?.run {
-                data = Gson().fromJson(string(), type)
-            }
-            return data
+            val genType = javaClass.genericSuperclass
+            val type = (genType as ParameterizedType).actualTypeArguments[0]
+            val convert = JsonConvert<T>(type)
+            return convert.convertResponse(response)
         }
 
         internal var onStart: ((Request<T, out Request<*, *>>) -> Unit)? = null

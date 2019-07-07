@@ -48,7 +48,7 @@ class OkGo private constructor() {
 
     /** 获取全局的cookie实例  */
     val cookieJar: CookieJarImpl
-        get() = okHttpClient!!.cookieJar() as CookieJarImpl
+        get() = okHttpClient!!.cookieJar as CookieJarImpl
 
     init {
         delivery = Handler(Looper.getMainLooper())
@@ -160,12 +160,12 @@ class OkGo private constructor() {
     fun cancelTag(tag: Any?) {
         if (tag == null) return
         getOkHttpClient()?.run {
-            dispatcher().queuedCalls().forEach {
+            dispatcher.queuedCalls().forEach {
                 if (tag == it.request().tag()) {
                     it.cancel()
                 }
             }
-            dispatcher().runningCalls().forEach {
+            dispatcher.runningCalls().forEach {
                 if (tag == it.request().tag()) {
                     it.cancel()
                 }
@@ -176,10 +176,10 @@ class OkGo private constructor() {
     /** 取消所有请求请求  */
     fun cancelAll() {
         getOkHttpClient()?.run {
-            dispatcher().queuedCalls().forEach {
+            dispatcher.queuedCalls().forEach {
                 it.cancel()
             }
-            dispatcher().runningCalls().forEach {
+            dispatcher.runningCalls().forEach {
                 it.cancel()
             }
         }
@@ -235,14 +235,17 @@ class OkGo private constructor() {
         /** 根据Tag取消请求  */
         fun cancelTag(client: OkHttpClient?, tag: Any?) {
             if (client == null || tag == null) return
-            for (call in client.dispatcher().queuedCalls()) {
-                if (tag == call.request().tag()) {
-                    call.cancel()
+            client.run {
+                dispatcher.queuedCalls().forEach { call ->
+                    if (tag == call.request().tag()) {
+                        call.cancel()
+                    }
                 }
-            }
-            for (call in client.dispatcher().runningCalls()) {
-                if (tag == call.request().tag()) {
-                    call.cancel()
+
+                dispatcher.runningCalls().forEach { call ->
+                    if (tag == call.request().tag()) {
+                        call.cancel()
+                    }
                 }
             }
         }
@@ -250,11 +253,13 @@ class OkGo private constructor() {
         /** 取消所有请求请求  */
         fun cancelAll(client: OkHttpClient?) {
             if (client == null) return
-            for (call in client.dispatcher().queuedCalls()) {
-                call.cancel()
-            }
-            for (call in client.dispatcher().runningCalls()) {
-                call.cancel()
+            client.run {
+                dispatcher.queuedCalls().forEach {
+                    it.cancel()
+                }
+                dispatcher.runningCalls().forEach {
+                    it.cancel()
+                }
             }
         }
     }

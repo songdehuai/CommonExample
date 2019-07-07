@@ -1,13 +1,22 @@
 package com.songdehuai.commonlib.net
 
 
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 class Result<T>(
     @SerializedName("code")
-    val code: Int,
+    val code: String,
     @SerializedName("message")
     val message: String,
     @SerializedName("result")
-    val result: T
-)
+    var result: T
+) {
+    fun isSuccess(): Boolean {
+        return "200" == code
+    }
+
+    override fun toString(): String {
+        return Gson().toJson(this)
+    }
+}
